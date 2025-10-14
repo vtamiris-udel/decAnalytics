@@ -10,6 +10,7 @@ This README is automatically generated and updated when changes are made to stud
 |---------|----------|-------------------|-----------|--------|------------|
 | AdamF | Adam | Inventor of "The Invisible Pool Toy" - I hold a pa...<br>I like biking in cities and on gravel rail trails.... | [View Portfolio](AdamF/README.md) | N/A | <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpU-_uS7d7czuDb5wBpTui3ahBAFzJAIMpJA&s" alt="The Invisible Pool Toy" title="The Invisible Pool Toy" width="150" style="max-height: 85px; object-fit: contain; margin: 2px;"><img src="AdamF/IMG_1783.png" alt="Adam - With family on the Rehoboth-Lewes Beach Bike Trail" title="Adam - With family on the Rehoboth-Lewes Beach Bike Trail" width="150"> |
 | Chandra | Chandra | Data enthusiast, hobbyist artist and singer.<br>N/A | [View Portfolio](Chandra/README.md) | N/A | <img src="Chandra/IMG_7975.JPG" alt="Chandra with family in Aruba" title="Chandra with family in Aruba" width="150"> |
+| ashandilya48 | Anupam | I am a very bad karaoke singer<br>I am foolishly optimistic person | [View Portfolio](ashandilya48/README.md) | N/A | <img src="ashandilya48/IMG_0172.jpg" alt="Description" title="Description" width="150"> |
 
 ## 🆕 How to Add Your Portfolio
 
@@ -46,3 +47,4 @@ This README is automatically updated via GitHub Actions whenever any `README.md`
 
 ---
 *Last updated: %Y->- (HEAD -> main, origin/main) a34b14248632c133cba4397c3165e8fc31387fe7:%M:HEAD*
+*Last updated: %Y->- (HEAD -> main, origin/main) c598cf964811e647cd2e561e3ea61b2c3761f762:%M:HEAD*
