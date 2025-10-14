@@ -34,7 +34,7 @@ This README is automatically generated and updated when changes are made to stud
 ## 🖼️ Portfolio Images
 
 ### Image Title
-![Description](image_filename.jpg)
+![Description](IMG_0172.jpg)
 ```
 
 3. Include portfolio images in your folder
