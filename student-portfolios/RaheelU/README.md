@@ -15,4 +15,4 @@
 ## 🖼️ Portfolio Images
 
 ### One of my favorite hikes
-![Waterfall hike in Indonesia](student-portfolios\RaheelU\Indonesia_waterfall.jpg)
+![Waterfall hike in Indonesia](Indonesia_waterfall.jpg)
