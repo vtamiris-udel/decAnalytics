@@ -1,5 +1,4 @@
-# 👨‍🎓 Student Portfolio - Adam F. 🚴
-
+# 👨‍🎓 Student Portfolio - Luke B. 🏸
 ---
 
 ## 📋 Student Information For Reading
