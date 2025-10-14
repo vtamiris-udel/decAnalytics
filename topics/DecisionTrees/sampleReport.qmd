@@ -1,0 +1,461 @@
+---
+title: "Decision Tree Challenge"
+subtitle: "Feature Importance and Categorical Variable Encoding"
+format:
+  html: default
+  pdf: default
+execute:
+  echo: true
+  eval: true
+---
+
+# Decision Tree Challenge: Feature Importance and Variable Encoding
+
+## The Problem: ZipCode as Numerical vs Categorical
+
+**Key Question:** What happens when we treat zipCode as a numerical variable in a decision tree? How does this affect feature importance interpretation?
+
+**The Issue:** Zip codes (50010, 50011, 50012, 50013) are categorical variables representing discrete geographic areas. When treated as numerical, the tree might split on "zipCode > 50012.5" - which has no meaningful interpretation for house prices.  Zip codes are non-ordinal categorical variables meaning they have no inherent order that aids house price prediction (i.e. zip code 99999 is not the priceiest zip code).
+
+## Data Loading and Model Building
+
+::: {.panel-tabset}
+
+### R
+
+```{r}
+#| label: load-and-model-r
+#| echo: true
+#| message: false
+#| warning: false
+
+# Load libraries
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(rpart))
+if (!require(rpart.plot, quietly = TRUE)) {
+  install.packages("rpart.plot", repos = "https://cran.rstudio.com/")
+  library(rpart.plot)
+}
+
+# Load data
+sales_data <- read.csv("https://raw.githubusercontent.com/flyaflya/buad442Fall2025/refs/heads/main/datasets/salesPriceData.csv")
+
+# Prepare model data (treating zipCode as numerical)
+model_data <- sales_data %>%
+  select(SalePrice, LotArea, YearBuilt, GrLivArea, FullBath, HalfBath, 
+         BedroomAbvGr, TotRmsAbvGrd, GarageCars, zipCode) %>%
+  na.omit()
+
+# Split data
+set.seed(123)
+train_indices <- sample(1:nrow(model_data), 0.8 * nrow(model_data))
+train_data <- model_data[train_indices, ]
+test_data <- model_data[-train_indices, ]
+
+# Build decision tree
+tree_model <- rpart(SalePrice ~ ., 
+                    data = train_data,
+                    method = "anova",
+                    control = rpart.control(maxdepth = 3, 
+                                          minsplit = 20, 
+                                          minbucket = 10))
+
+cat("Model built with", sum(tree_model$frame$var == "<leaf>"), "terminal nodes\n")
+```
+
+### Python
+
+```{python}
+#| label: load-and-model-python
+#| echo: true
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.tree import DecisionTreeRegressor, plot_tree
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
+import warnings
+warnings.filterwarnings('ignore')
+
+# Load data
+sales_data = pd.read_csv("https://raw.githubusercontent.com/flyaflya/buad442Fall2025/refs/heads/main/datasets/salesPriceData.csv")
+
+# Prepare model data (treating zipCode as numerical)
+model_vars = ['SalePrice', 'LotArea', 'YearBuilt', 'GrLivArea', 'FullBath', 
+              'HalfBath', 'BedroomAbvGr', 'TotRmsAbvGrd', 'GarageCars', 'zipCode']
+model_data = sales_data[model_vars].dropna()
+
+# Split data
+X = model_data.drop('SalePrice', axis=1)
+y = model_data['SalePrice']
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=123)
+
+# Build decision tree
+tree_model = DecisionTreeRegressor(max_depth=3, 
+                                  min_samples_split=20, 
+                                  min_samples_leaf=10, 
+                                  random_state=123)
+tree_model.fit(X_train, y_train)
+
+print(f"Model built with {tree_model.get_n_leaves()} terminal nodes")
+```
+
+:::
+
+## Tree Visualization
+
+::: {.panel-tabset}
+
+### R
+
+```{r}
+#| label: visualize-tree-r
+#| echo: true
+#| message: false
+#| warning: false
+#| fig-width: 10
+#| fig-height: 6
+
+# Visualize tree
+if (require(rpart.plot, quietly = TRUE)) {
+  rpart.plot(tree_model, 
+             type = 2,
+             extra = 101,
+             fallen.leaves = TRUE,
+             digits = 0,
+             cex = 0.8,
+             main = "Decision Tree (zipCode as Numerical)")
+} else {
+  plot(tree_model, uniform = TRUE, main = "Decision Tree (zipCode as Numerical)")
+  text(tree_model, use.n = TRUE, all = TRUE, cex = 0.8)
+}
+```
+
+### Python
+
+```{python}
+#| label: visualize-tree-python
+#| echo: true
+#| fig-width: 10
+#| fig-height: 6
+
+# Visualize tree
+plt.figure(figsize=(10, 6))
+plot_tree(tree_model, 
+          feature_names=X_train.columns,
+          filled=True, 
+          rounded=True,
+          fontsize=10,
+          max_depth=3)
+plt.title("Decision Tree (zipCode as Numerical)")
+plt.tight_layout()
+plt.show()
+```
+
+:::
+
+## Feature Importance Analysis
+
+::: {.panel-tabset}
+
+### R
+
+```{r}
+#| label: feature-importance-r
+#| echo: false
+#| message: false
+#| warning: false
+
+# Extract and display feature importance
+importance_df <- data.frame(
+  Feature = names(tree_model$variable.importance),
+  Importance = as.numeric(tree_model$variable.importance)
+) %>%
+  arrange(desc(Importance)) %>%
+  mutate(Importance_Percent = round(Importance / sum(Importance) * 100, 2))
+
+# Check zipCode ranking
+zipcode_rank <- which(importance_df$Feature == "zipCode")
+zipcode_importance <- importance_df$Importance_Percent[zipcode_rank]
+```
+
+```{r}
+#| label: importance-plot-r
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 5
+
+# Plot feature importance
+library(ggplot2)
+ggplot(importance_df, aes(x = reorder(Feature, Importance), y = Importance)) +
+  geom_col(fill = "steelblue", alpha = 0.7) +
+  coord_flip() +
+  labs(title = "Feature Importance (zipCode as Numerical)",
+       x = "Features", y = "Importance Score") +
+  theme_minimal()
+```
+
+### Python
+
+```{python}
+#| label: feature-importance-python
+#| echo: false
+
+# Extract and display feature importance
+importance_df = pd.DataFrame({
+    'Feature': X_train.columns,
+    'Importance': tree_model.feature_importances_
+}).sort_values('Importance', ascending=False)
+
+importance_df['Importance_Percent'] = (importance_df['Importance'] * 100).round(2)
+
+# Check zipCode ranking
+zipcode_rank = importance_df[importance_df['Feature'] == 'zipCode'].index[0] + 1
+zipcode_importance = importance_df[importance_df['Feature'] == 'zipCode']['Importance_Percent'].iloc[0]
+```
+
+```{python}
+#| label: importance-plot-python
+#| echo: false
+#| fig-width: 8
+#| fig-height: 5
+
+# Plot feature importance
+plt.figure(figsize=(8, 5))
+plt.barh(range(len(importance_df)), importance_df['Importance'], 
+         color='steelblue', alpha=0.7)
+plt.yticks(range(len(importance_df)), importance_df['Feature'])
+plt.xlabel('Importance Score')
+plt.title('Feature Importance (zipCode as Numerical)')
+plt.gca().invert_yaxis()
+plt.tight_layout()
+plt.show()
+```
+
+:::
+
+## Critical Analysis: The Encoding Problem
+
+::: {.callout-warning}
+## ⚠️ The Problem Revealed
+
+**What to note:** Our decision tree treated `zipCode` as a numerical variable.  This leads to zip code being unimportant.  Not surprisingly, because there is no reason to believe allowing splits like "zipCode < 50012.5" should be beneficial for house price prediction. This false coding of a variable creates several problems:
+
+1. **Potentially Meaningless Splits:** A zip code of 50013 is not "greater than" 50012 in any meaningful way for house prices
+2. **False Importance:** The algorithm assigns importance to zipCode based on numerical splits rather than categorical distinctions OR the importance of zip code is completely missed as numerical ordering has no inherent relationship to house prices.
+3. **Misleading Interpretations:** We might conclude zipCode is not important when our intuition tells us it should be important (listen to your intuition).
+
+**The Real Issue:** Zip codes are categorical variables representing discrete geographic areas. The numerical values have no inherent order or magnitude relationship to house prices.  These must be modelled as categorical variables.
+:::
+
+## Proper Categorical Encoding: The Solution
+
+Now let's repeat the analysis with zipCode properly encoded as categorical variables to see the difference.
+
+**R Approach:** Convert zipCode to a factor (categorical variable)  
+**Python Approach:** One-hot encode zipCode (create dummy variables for each zip code)
+
+### Categorical Encoding Analysis
+
+::: {.panel-tabset}
+
+### R
+
+```{r}
+#| label: categorical-r
+#| echo: true
+#| message: false
+#| warning: false
+
+
+# Convert zipCode to factor (categorical)
+model_data_cat <- model_data %>%
+  mutate(zipCode = as.factor(zipCode))
+
+# Split data
+set.seed(123)
+train_indices_cat <- sample(1:nrow(model_data_cat), 0.8 * nrow(model_data_cat))
+train_data_cat <- model_data_cat[train_indices_cat, ]
+test_data_cat <- model_data_cat[-train_indices_cat, ]
+
+# Build decision tree with categorical zipCode
+tree_model_cat <- rpart(SalePrice ~ ., 
+                        data = train_data_cat,
+                        method = "anova",
+                        control = rpart.control(maxdepth = 3, 
+                                              minsplit = 20, 
+                                              minbucket = 10))
+
+# Feature importance with categorical zipCode
+importance_cat <- data.frame(
+  Feature = names(tree_model_cat$variable.importance),
+  Importance = as.numeric(tree_model_cat$variable.importance)
+) %>%
+  arrange(desc(Importance)) %>%
+  mutate(Importance_Percent = round(Importance / sum(Importance) * 100, 2))
+
+# Check if zipCode appears in tree
+zipcode_in_tree <- "zipCode" %in% names(tree_model_cat$variable.importance)
+if(zipcode_in_tree) {
+  zipcode_rank_cat <- which(importance_cat$Feature == "zipCode")
+}
+```
+
+### Python
+
+```{python}
+#| label: categorical-python
+#| echo: true
+#| include: false
+# One-hot encode zipCode
+import pandas as pd
+
+# Create one-hot encoded zipCode
+zipcode_encoded = pd.get_dummies(model_data['zipCode'], prefix='zipCode')
+model_data_cat = pd.concat([model_data.drop('zipCode', axis=1), zipcode_encoded], axis=1)
+
+# Split data
+X_cat = model_data_cat.drop('SalePrice', axis=1)
+y_cat = model_data_cat['SalePrice']
+X_train_cat, X_test_cat, y_train_cat, y_test_cat = train_test_split(X_cat, y_cat, test_size=0.2, random_state=123)
+
+# Build decision tree with one-hot encoded zipCode
+tree_model_cat = DecisionTreeRegressor(max_depth=3, 
+                                      min_samples_split=20, 
+                                      min_samples_leaf=10, 
+                                      random_state=123)
+tree_model_cat.fit(X_train_cat, y_train_cat)
+
+# Feature importance with one-hot encoded zipCode
+importance_cat_df = pd.DataFrame({
+    'Feature': X_train_cat.columns,
+    'Importance': tree_model_cat.feature_importances_
+}).sort_values('Importance', ascending=False)
+
+importance_cat_df['Importance_Percent'] = (importance_cat_df['Importance'] * 100).round(2)
+
+# Check zipCode features
+zipcode_features = [col for col in X_train_cat.columns if col.startswith('zipCode')]
+zipcode_importance = importance_cat_df[importance_cat_df['Feature'].isin(zipcode_features)]['Importance'].sum()
+total_importance = importance_cat_df['Importance'].sum()
+zipcode_percent = (zipcode_importance / total_importance * 100).round(2)
+```
+
+:::
+
+### Tree Visualization: Categorical zipCode
+
+::: {.panel-tabset}
+
+### R
+
+```{r}
+#| label: visualize-tree-cat-r
+#| echo: true
+#| message: false
+#| warning: false
+#| fig-width: 10
+#| fig-height: 6
+
+# Visualize tree with categorical zipCode
+if (require(rpart.plot, quietly = TRUE)) {
+  rpart.plot(tree_model_cat, 
+             type = 2,
+             extra = 101,
+             fallen.leaves = TRUE,
+             digits = 0,
+             cex = 0.8,
+             main = "Decision Tree (zipCode as Categorical)")
+} else {
+  plot(tree_model_cat, uniform = TRUE, main = "Decision Tree (zipCode as Categorical)")
+  text(tree_model_cat, use.n = TRUE, all = TRUE, cex = 0.8)
+}
+```
+
+### Python
+
+```{python}
+#| label: visualize-tree-cat-python
+#| echo: true
+#| fig-width: 10
+#| fig-height: 6
+
+# Visualize tree with one-hot encoded zipCode
+plt.figure(figsize=(10, 6))
+plot_tree(tree_model_cat, 
+          feature_names=X_train_cat.columns,
+          filled=True, 
+          rounded=True,
+          fontsize=8,
+          max_depth=4)
+plt.title("Decision Tree (zipCode One-Hot Encoded)")
+plt.tight_layout()
+plt.show()
+```
+
+:::
+
+### Feature Importance: Categorical zipCode
+
+::: {.panel-tabset}
+
+### R
+
+```{r}
+#| label: importance-plot-cat-r
+#| echo: false
+#| message: false
+#| warning: false
+#| fig-width: 8
+#| fig-height: 5
+
+# Plot feature importance for categorical zipCode
+library(ggplot2)
+ggplot(importance_cat, aes(x = reorder(Feature, Importance), y = Importance)) +
+  geom_col(fill = "darkgreen", alpha = 0.7) +
+  coord_flip() +
+  labs(title = "Feature Importance (zipCode as Categorical)",
+       x = "Features", y = "Importance Score") +
+  theme_minimal()
+```
+
+### Python
+
+```{python}
+#| label: importance-plot-cat-python
+#| echo: false
+#| fig-width: 8
+#| fig-height: 5
+
+# Plot feature importance for categorical zipCode
+plt.figure(figsize=(8, 5))
+plt.barh(range(len(importance_cat_df)), importance_cat_df['Importance'], 
+         color='darkgreen', alpha=0.7)
+plt.yticks(range(len(importance_cat_df)), importance_cat_df['Feature'])
+plt.xlabel('Importance Score')
+plt.title('Feature Importance (zipCode One-Hot Encoded)')
+plt.gca().invert_yaxis()
+plt.tight_layout()
+plt.show()
+```
+
+:::
+
+## Discussion Questions for Challenge
+
+1. There are four models above, two in R and two in Python.  For each language, the models differ by how zip code is modelled, either as a numerical variable or as a catgorical variable. Given what you know about zip codes and real estate prices, how should zip code be modelled, numerically or categorically?
+2. When modelling zip code as a categorical variable, the output tree and feature importance differs quite significantly between R and Python.  Investigate why this is the case.  Which language would you say does a better job of modelling zip code as a categorical variable?  Why is this the case?  Do you see any documentation suggesting the other language does a better job?  If so, please provide a quote from the documentation.
+
+::: {.callout-important}
+## 📋 Important Note on AI Usage
+
+**No coding assistance expected:** This challenge is designed for independent analysis and critical thinking. You are **not** expected to use AI for coding help or to write code for you.  You are **not** expected to code at all unless curious about any ideas you may have. 
+
+**AI as unreliable thought partner:** If you choose to use AI tools, treat them as an unreliable thought partner. AI responses should be verified and cross-checked rather than accepted at face value.
+
+**Documentation verification required:** For question 2, you must investigate the official documentation for both `rpart` (R) and `sklearn.tree.DecisionTreeRegressor` (Python) to understand why the two implementations yield vastly different results when handling categorical variables. Your analysis should be grounded in the actual documentation and technical specifications of these libraries, not AI-generated explanations.  AI can be helpful in digesting the documentation, but you must verify the information is correct.
+:::
+

@@ -1,0 +1,24 @@
+---
+title: "My First Quarto Document"
+format: html
+---
+
+# Hello World! 👋
+
+This is my first Quarto document. My nick name is Adam F.
+
+::: {.callout-note}
+## AI-Generated Content
+The following section about singer-songwriters was created using Cursor AI's built-in AI assistance feature. This demonstrates how AI can help generate meaningful, personalized content for documents.
+:::
+
+## My Love for Singer-Songwriters and Acoustic Music
+
+I have a deep appreciation for singer-songwriters and the raw beauty of acoustic music. There's something incredibly powerful about a single voice accompanied by just a guitar or piano that can convey emotions in ways that heavily produced music often cannot.
+
+One of my absolute favorites is **John Prine**. His storytelling ability is unmatched - he had this incredible gift for capturing the essence of everyday life and turning it into poetry. Songs like "Angel from Montgomery" and "Hello in There" showcase his ability to tell stories that resonate with people from all walks of life. His lyrics are both simple and profound, often dealing with themes of love, loss, and the human condition.
+
+The beauty of acoustic music lies in its authenticity. When you strip away the layers of production, what remains is pure emotion and storytelling. Artists like John Prine, Bob Dylan, and Joni Mitchell created entire worlds with just their voices and instruments. There's an intimacy in acoustic performances that creates a direct connection between the artist and listener.
+
+I love how acoustic music can transport you to different places and times. A well-crafted song with just a guitar can evoke memories, paint pictures, and stir emotions in ways that feel almost magical. It's the kind of music that makes you want to sit around a campfire, share stories, and connect with others on a deeper level.
+

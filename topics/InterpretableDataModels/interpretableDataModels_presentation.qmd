@@ -1,0 +1,851 @@
+---
+title: "Interpretable Data Models"
+subtitle: "Understanding the Why Behind Data-Driven Predictions"
+author: "BUAD 442"
+date: today
+format:
+  pptx:
+    incremental: true
+execute:
+  echo: true
+  eval: true
+---
+
+# Interpretable Data Models
+
+## Understanding the Why Behind Data-Driven Predictions
+
+---
+
+# The Core Idea
+
+## Data Models as Functions
+
+A data model is a function that represents how variables relate.
+
+::: {.notes}
+Data models can take different functional forms - either direct mappings or probability distributions.
+:::
+
+---
+
+# Direct Mappings
+
+$f: X \rightarrow Y$
+
+Turning inputs into outputs.
+
+**Example:** Linear regression predicting house prices from square footage.
+
+::: {.notes}
+Direct mappings are explicit functions that take inputs and produce outputs.
+:::
+
+---
+
+# Probability Distributions
+
+$p(X,Y)$
+
+Describing how variables co-vary and with what uncertainty.
+
+**Example:** Bayesian networks modeling disease symptoms and causes.
+
+::: {.notes}
+Probability distributions describe relationships with uncertainty rather than deterministic mappings.
+:::
+
+---
+
+# What is Interpretability?
+
+## One-Liner Definition
+
+An **interpretable data model** is a function whose structure is simple enough that humans can understand the relationships it encodes.
+
+::: {.notes}
+The key is that the structure must be simple enough for human understanding.
+:::
+
+---
+
+# Expanded Definition
+
+All models are functions, but their form varies.
+
+Sometimes explicit mappings, other times joint distributions.
+
+An interpretable model is transparent enough that people can trace the "why" behind its outputs.
+
+::: {.notes}
+The transparency allows users to understand the reasoning process.
+:::
+
+---
+
+# Key Characteristics
+
+- **Clear structure**: easily understood relationships
+- **Human-scale parameters**: coefficients, thresholds that make intuitive sense  
+- **Traceable reasoning**: ability to explain how predictions were reached
+
+::: {.notes}
+These three characteristics make a model interpretable to humans.
+:::
+
+---
+
+# Interpretability vs Explainability
+
+## Interpretability
+
+**Definition:** The degree to which a model's internal structure, parameters, and decision-making process can be understood by humans without requiring additional explanation tools.
+
+**Focus:** Built-in transparency of the model itself.
+
+::: {.notes}
+Interpretability is about the model's inherent transparency.
+:::
+
+---
+
+# Interpretability vs Explainability
+
+## Explainability
+
+**Definition:** The ability to provide clear, causal reasoning for why a model made a specific prediction.
+
+**Focus:** Post-hoc analysis and explanation of model decisions.
+
+::: {.notes}
+Explainability comes after the fact and requires causal understanding.
+:::
+
+---
+
+# The Causal Reasoning Challenge
+
+## Correlation vs. Causation in Explanations
+
+Most "explanations" from data models are actually just descriptions of correlations.
+
+True explainability requires causal reasoning.
+
+::: {.notes}
+This is a critical distinction - correlation is not causation.
+:::
+
+---
+
+# Example: Correlation vs Causation
+
+**Correlational explanation:** "Maternal Tylenol use during pregnancy is associated with autism diagnosis in children"
+
+**Causal explanation:** "Maternal symptoms X, Y, and Z during pregnancy lead to both increased Tylenol use and increased autism risk in the child."
+
+::: {.notes}
+The difference matters for actionability and trust.
+:::
+
+---
+
+# Why Interpretability Matters
+
+## The Core Benefits
+
+- **Trust**: Users and stakeholders can validate and believe results
+- **Actionability**: Insights can be acted on because the logic is clear  
+- **Debuggability**: Problems can be identified and corrected
+- **Ethics**: Transparency helps detect bias and unintended consequences
+
+::: {.notes}
+These four benefits make interpretability crucial for real-world applications.
+:::
+
+---
+
+# The Problem with Black Boxes
+
+> "The problem is that a single metric, such as classification accuracy, is an incomplete description of most real-world tasks." - Doshi-Velez and Kim (2017)
+
+::: {.notes}
+Accuracy alone doesn't tell the whole story about model performance.
+:::
+
+---
+
+# The Trade-off
+
+Do you just want to know **what** is predicted?
+
+Or do you want to know **why** the prediction was made and possibly pay for the interpretability with a drop in predictive performance?
+
+::: {.notes}
+This is the fundamental trade-off in model selection.
+:::
+
+---
+
+# Key Reasons for Interpretability
+
+## Human Curiosity & Learning
+
+Humans have a mental model of their environment that is updated when something unexpected happens.
+
+This update is performed by finding an explanation for the unexpected event.
+
+::: {.notes}
+Humans naturally seek explanations to update their understanding.
+:::
+
+---
+
+# Example: Human Learning
+
+A human feels unexpectedly sick and asks, "Why do I feel so sick?"
+
+They learn that they get sick every time they eat those red berries.
+
+They update their mental model and decide that the berries caused the sickness.
+
+::: {.notes}
+This is how humans naturally learn through explanation.
+:::
+
+---
+
+# Scientific Discovery
+
+In many scientific disciplines, there is a change from qualitative to quantitative methods, and also towards data-driven modeling.
+
+The goal of science is to gain knowledge, but many problems are solved with big datasets and complex statistical models.
+
+::: {.notes}
+Science is moving toward data-driven approaches.
+:::
+
+---
+
+# The Model as Knowledge Source
+
+**The model itself becomes the source of knowledge instead of the data.**
+
+Interpretability makes it possible to extract this additional knowledge captured by the model.
+
+::: {.notes}
+Models can capture knowledge that goes beyond the original data.
+:::
+
+---
+
+# Safety & Testing
+
+Data models take on real-world tasks that require safety measures and testing.
+
+**Example:** A self-driving car automatically detects cyclists based on a computer vision system.
+
+You want to be 100% sure that the abstraction the system has learned is error-free because running over cyclists is very bad.
+
+::: {.notes}
+Safety-critical applications require interpretability for validation.
+:::
+
+---
+
+# Bias Detection
+
+By default, data models pick up biases from the training data.
+
+This could make your models discriminate against underrepresented groups.
+
+**Interpretability is a useful debugging tool for detecting bias in data models.**
+
+::: {.notes}
+Bias detection is crucial for fair AI systems.
+:::
+
+---
+
+# Social Acceptance
+
+The process of integrating machines and algorithms into our daily lives requires interpretability to increase social acceptance.
+
+**Example:** Our vacuum cleaner "DustBot" gets stuck. As an explanation for the accident, DustBot tells us that it needs to be on an even surface. This creates shared meaning and trust.
+
+::: {.notes}
+Explanations help build trust between humans and AI systems.
+:::
+
+---
+
+# When Do We NOT Need Interpretability?
+
+## Low-Impact Scenarios
+
+Interpretability is not required if the consequences of being wrong are minimal or acceptable.
+
+**Example:** Sarah's personal Spotify playlist predictor that suggests songs she might like based on her listening history.
+
+::: {.notes}
+Low-stakes applications may not need interpretability.
+:::
+
+---
+
+# Well-Studied Problems
+
+Some applications have been sufficiently well studied so that there is enough practical experience with the model.
+
+**Example:** Statistical models for optical character recognition that process images of envelopes and extract addresses.
+
+These systems have been in use for many years, and it's clear that they work.
+
+::: {.notes}
+Proven applications may not need additional interpretability.
+:::
+
+---
+
+# Gaming Prevention
+
+Interpretability might enable people or programs to manipulate the system.
+
+**Example:** Facebook's content ranking algorithm where users might manipulate their posts to game the system if they know which features affect visibility in their friends' feeds.
+
+::: {.notes}
+Sometimes transparency can be exploited.
+:::
+
+---
+
+# What Makes a Good Explanation?
+
+## Characteristics of Human-Friendly Explanations
+
+::: {.notes}
+These characteristics make explanations more effective for humans.
+:::
+
+---
+
+# Contrastive
+
+Humans usually don't ask why a certain prediction was made, but why this prediction was made **instead of another prediction**.
+
+**Example:** For a house price prediction, the house owner might be interested in why does this beautiful house seem so cheap?
+
+::: {.notes}
+People want to understand why one outcome occurred instead of another.
+:::
+
+---
+
+# Selected
+
+People don't expect explanations that cover the actual and complete list of causes of an event.
+
+We are used to selecting one or two causes from a variety of possible causes as THE explanation.
+
+**What it means for data modeling:** Make the explanation short, give only 1 to 3 reasons, even if the world is more complex.
+
+::: {.notes}
+Humans prefer simple explanations over complex ones.
+:::
+
+---
+
+# Audience-focused
+
+Explanations are part of a conversation or interaction between the explainer and the receiver of the explanation.
+
+**Example:** Explaining cryptocurrencies to a technical person vs. to your grandmother would be completely different.
+
+::: {.notes}
+Good explanations are tailored to the audience.
+:::
+
+---
+
+# Focus on Abnormal
+
+People focus more on abnormal causes to explain events.
+
+These are causes or effects that were not expected but nevertheless happened.
+
+**Example:** Viagra was originally developed as a heart medication, but researchers discovered its unexpected side effect during clinical trials.
+
+::: {.notes}
+Unexpected outcomes get more attention in explanations.
+:::
+
+---
+
+# Truthful
+
+Good explanations prove to be true in reality (i.e., in other situations).
+
+**Example:** GPS satellites need to account for time dilation effects from Einstein's theory of relativity.
+
+The satellites' clocks run faster in orbit due to weaker gravity, and this relativistic effect would cause GPS to be off by about 11 kilometers per day if not corrected.
+
+::: {.notes}
+Truthful explanations have predictive power.
+:::
+
+---
+
+# Consistent with Prior Beliefs
+
+Humans often judge arguments by whether the conclusion fits their beliefs, rather than whether both their assumptions and their the reasoning are logically valid.
+
+This is called the belief bias effect.
+
+::: {.notes}
+People tend to accept explanations that align with their existing beliefs.
+:::
+
+---
+
+# Classic Experiment (Evans, Barston & Pollard, 1983)
+
+**Premise 1:** All mammals can walk.
+
+**Premise 2:** Whales are mammals.
+
+**Conclusion:** Whales can walk.
+
+Although the conclusion is logically valid, it is completely unbelievable. Despite this, approximately 50% of participants would judge conclusions like this as true.
+
+::: {.notes}
+This demonstrates how beliefs can override logical reasoning.
+:::
+
+---
+
+# The Dark Side
+
+While belief consistency makes explanations more "human-friendly," it's arguably not very friendly to our future as a society.
+
+We're essentially designing systems that reinforce existing biases rather than challenging them.
+
+::: {.notes}
+This is a critical ethical consideration for AI systems.
+:::
+
+---
+
+# Example: Loan Approval Model
+
+## The Problem
+
+A bank uses a statistical model to approve or reject loan applications.
+
+The model performs well on test data, but applicants (and regulators) want to understand why decisions are made.
+
+::: {.notes}
+This is a real-world example where interpretability is crucial.
+:::
+
+---
+
+# Without Interpretability
+
+- **Applicant:** "Why was my loan rejected?"
+- **Bank:** "The model said no."
+- **Result:** Frustration, lack of trust, potential discrimination
+
+::: {.notes}
+Black box decisions lead to problems.
+:::
+
+---
+
+# With Interpretability
+
+- **Applicant:** "Why was my loan rejected?"
+- **Bank:** "Your application was rejected because your debt-to-income ratio is 45% (our threshold is 40%) and you have two recent late payments. If you can reduce your debt-to-income ratio to below 40% and maintain on-time payments for 6 months, you would likely be approved."
+- **Result:** Clear guidance, trust, actionable steps
+
+::: {.notes}
+Interpretable decisions provide clear guidance and build trust.
+:::
+
+---
+
+# Legal Requirements
+
+## Banks Must Provide Interpretability
+
+**Equal Credit Opportunity Act (ECOA)** - Requires lenders to provide "adverse action notices" that explain why credit was denied, including the specific reasons for the decision.
+
+::: {.notes}
+This is a legal requirement, not just a best practice.
+:::
+
+---
+
+# Interpretable Models
+
+- **Linear regression**: Clear coefficients and additive structure
+- **Decision trees**: Simple if-then rules
+- **Simple Bayesian models**: Transparent conditional probabilities
+- **Rule-based systems**: Explicit logical statements
+
+::: {.notes}
+These model types are inherently interpretable.
+:::
+
+---
+
+# Less Interpretable Models
+
+- **Deep neural networks**: Complex non-linear transformations
+- **Ensemble models**: Random forests, gradient boosting (without explanation tools)
+- **Support vector machines**: High-dimensional transformations
+- **Complex statistical models**: Many interactions and non-linearities
+
+::: {.notes}
+These models are harder to interpret but may be more accurate.
+:::
+
+---
+
+# In Short
+
+**Interpretability means models aren't just accurate — they're understandable.**
+
+::: {.notes}
+This is the key takeaway from the interpretability discussion.
+:::
+
+---
+
+# Linear Regression Example
+
+## BuildIt Inc. House Flipping
+
+BuildIt Inc. flips houses - they buy houses to quickly renovate and then sell.
+
+Their specialty is building additions on to existing houses in established neighborhoods and then selling the home at prices above their total investment.
+
+::: {.notes}
+This is a practical business example of using interpretable models.
+:::
+
+---
+
+# BuildIt's Decision Criteria
+
+BuildIt's decision to move into a neighborhood is based on how sales price fluctuates with square footage.
+
+If sales price seems to increase by more than $120 per additional square foot, then they consider that neighborhood to be a good candidate for buying houses.
+
+::: {.notes}
+They have a clear business rule based on interpretable metrics.
+:::
+
+---
+
+# BuildIt's Data
+
+Here is the `python` code that creates a dataframe with BuildIt's data (note: `salesPrice` is in thousands of dollars):
+
+```python
+## make two data arrays representing observations
+## of six home sales
+salesPrice = [160, 220, 190, 250, 290, 240]
+sqFootage = [960, 1285, 1350, 1600, 1850, 1900]
+```
+
+::: {.notes}
+This is the actual data they collected.
+:::
+
+---
+
+# Visualizing the Relationship
+
+Visually, we can confirm what appears to be a linear relationship between square footage and sales prices by creating a scatterplot with a linear regression line drawn in blue:
+
+::: {.notes}
+The visualization helps confirm the linear relationship.
+:::
+
+---
+
+```python
+#| fig-cap: A plausible regression line placed through the six observed sales.
+#| label: fig-firstPlot
+#| results: hide
+#| warning: false
+#| message: false
+#| echo: false
+
+import seaborn as sns
+import seaborn.objects as so
+import matplotlib.pyplot as plt
+
+# Set seaborn style
+sns.set_style("whitegrid")
+
+(
+    so.Plot(x=sqFootage, y=salesPrice)
+    .add(so.Dots(pointsize = 12)) ## big points
+    .add(so.Line(), so.PolyFit(order = 1)) ## adds regression line
+    .label(x="Square Footage", y="Sales Price in (000's)")
+    .show()
+)
+```
+
+---
+
+# BuildIt's Key Question
+
+BuildIt is interested in the slope of this line which gives the estimated change in mean sales price for each unit change in square footage.
+
+For BuildIt, they want to know if this slope is above $120 per square foot because at that price point the firm is confident it can make money?
+
+::: {.notes}
+The slope is the key business metric they need to understand.
+:::
+
+---
+
+# Mathematical Notation
+
+Letting,
+
+$$
+\begin{aligned}
+x_i \equiv &\textrm{ The square footage for the } i^{th} \textrm{ house.} \\
+y_i \equiv &\textrm{ The observed sales price, in 000's, for the } i^{th} \textrm{ house.} \\
+\alpha \equiv &\textrm{ The intercept term for the regression line.} \\
+\beta \equiv &\textrm{ The slope coefficient representing change in expected price per square footage.} \\
+\mu_i \equiv &\textrm{ The expected sales price, in 000's, for any given square footage where } \\
+& \hspace{0.2cm} \mu_i = E(y_i | x_i) \textrm{ and } \mu_i = \alpha + \beta \times x_i.
+\end{aligned}
+$$
+
+::: {.notes}
+This notation helps us understand the mathematical structure.
+:::
+
+---
+
+# Linear Regression Output
+
+```python
+import numpy as np
+np.polyfit(x = sqFootage, y = salesPrice, deg = 1)
+```
+
+In the below code output, the first element of the returned array is $\beta$, the slope coefficient for how price changes per square foot and the second element of the array is $\alpha$ typically referred to as the y-intercept.
+
+::: {.notes}
+This code calculates the regression coefficients.
+:::
+
+---
+
+# The Best Fit Line
+
+Based on the output, the following linear equation is the so-called "best" line:
+
+$$
+\mu_i = 58.91 + 0.1114 \times x_i
+$$
+
+::: {.notes}
+This is the mathematical model that describes the relationship.
+:::
+
+---
+
+# Business Interpretation
+
+The model suggests, assuming its assumptions are justified, that BuildIt can anticipate being able to sell additional square footage for about $111 per square foot (i.e. $1000* \beta$ because price is in 000's).
+
+This would not earn them acceptable profit as it is less than $120 per square foot.
+
+::: {.notes}
+The business interpretation shows this neighborhood doesn't meet their criteria.
+:::
+
+---
+
+# Uncertainty Consideration
+
+However, with only `6` data points, there is obviously going to be tremendous uncertainty in this estimate.
+
+::: {.notes}
+Small sample sizes lead to high uncertainty in estimates.
+:::
+
+---
+
+# Visualizing as a Generative DAG
+
+From previous coursework, you are probably familiar with simple linear regression equation expressed mathematically.
+
+This model can be visually expressed as a generative model with the assumption that our observed data is normally distributed around some line of expected sales prices.
+
+::: {.notes}
+The DAG helps visualize the probabilistic structure of the model.
+:::
+
+---
+
+# Mathematical Structure
+
+$$
+\mu_i = \alpha + \beta x_i
+$$
+
+where,
+
+$$
+\begin{aligned}
+x_i &\equiv \textrm{The value of an explanatory variable for the } i^{th} \textrm{ observation.} \\
+\alpha &\equiv \textrm{ The intercept term for the line.} \\
+\beta &\equiv \textrm{ The slope coefficient for the line.} \\
+\mu_i &\equiv \textrm{ The expected value (or mean) for the } i^{th} \textrm{ observation.}
+\end{aligned}
+$$
+
+::: {.notes}
+This defines the mathematical components of the model.
+:::
+
+---
+
+# Generative DAG Visualization
+
+Using a generative DAG, @fig-lineDag presents a graphical version of simple linear regression.
+
+::: {.notes}
+The DAG shows the probabilistic relationships between variables.
+:::
+
+---
+
+```python
+#| echo: false
+#| include: false
+#| results: hide
+import matplotlib.pyplot as plt
+import pandas as pd
+from functools import partial, partialmethod
+import daft   ### %pip install -U git+https://github.com/daft-dev/daft.git
+from numpy.random import default_rng
+import numpy as np
+
+class dag(daft.PGM):
+    def __init__(self, *args, **kwargs):
+        daft.PGM.__init__(self, *args, **kwargs)
+    
+    obsNode = partialmethod(daft.PGM.add_node, scale = 1.0, aspect = 3, fontsize = 9, plot_params = {'facecolor': 'cadetblue'})
+    decNode = partialmethod(daft.PGM.add_node, aspect = 2.2, fontsize = 9, shape = "rectangle", plot_params = {'facecolor': 'thistle'})
+    detNode = partialmethod(daft.PGM.add_node, scale = 1.0, aspect = 3, fontsize = 8.5, alternate = True, plot_params = {'facecolor': 'aliceblue'})
+    latNode = partialmethod(daft.PGM.add_node, scale = 1.0, aspect = 3.45, fontsize = 8.5, plot_params = {'facecolor': 'aliceblue'})
+    detNodeBig = partialmethod(daft.PGM.add_node, scale = 1.2, aspect = 2.25, fontsize = 9, alternate = True, plot_params = {'facecolor': 'aliceblue'})
+    latNodeBig = partialmethod(daft.PGM.add_node, scale = 1.2, aspect = 2.2, fontsize = 9, plot_params = {'facecolor': 'aliceblue'})
+    
+pgm = dag(dpi = 100, alternate_style="outer")
+pgm.latNode("y","Sales Price\n"+r"$y \sim Normal(\mu,\sigma)$",1,1)
+pgm.detNode("mu","Exp. Sales Price\n"+r"$\mu = \alpha + \beta \times x$",1,2)
+pgm.obsNode("x","Square Footage\n"+r"$x$",1,3, aspect = 2.7)
+pgm.latNode("alpha","Intercept Term\n"+r"$\alpha = 58.91$", -1.5, 3)
+pgm.latNode("beta","Slope Coeff " + r"$(\$ / ft^{2})$" + "\n"+r"$\beta = 0.1114$", 3.5, 3)
+pgm.latNode("sigma","Sales $ Std.Dev" + "\n"+r"$\sigma = 24.8$", 3.5, 2)
+pgm.add_edge("mu","y")
+pgm.add_edge("x","mu")
+pgm.add_edge("alpha","mu")
+pgm.add_edge("beta","mu")
+pgm.add_edge("sigma","y")
+pgm.add_plate([-0.2, 0.2, 2.4, 3.25], label = "Observation:\n" + r"$i = 1, 2, \ldots, 6$", 
+              label_offset = (2,2), rect_params = dict({"fill": False, "linestyle": "dashed", "edgecolor": "black"}))
+```
+
+---
+
+```python
+#| echo: false
+#| label: fig-lineDag
+#| fig-cap: Generative DAG model for linear regression.
+#| out-width: 85%
+pgm.show()
+```
+
+---
+
+# DAG Narrative
+
+The statistical model of the generative DAG in @fig-lineDag, let's digest the implied narrative. Starting at the bottom:
+
+* _Sales Price_ Node($y$): We observe _Sales Price_ data where each realization is normally distributed about an _Expected Sales Price_, $\mu$.
+
+::: {.notes}
+The DAG shows the probabilistic structure of the model.
+:::
+
+---
+
+# DAG Narrative (continued)
+
+* _Expected Sales Price_ Node($\mu$): Each realization $\mu$ is actually a deterministic function of this node's parents. Graphically, the double perimeter around the node signals this. This expectation varies with each observation. The only way this can happen is that it has a parent that varies with each observation; namely _Square Footage_.
+
+::: {.notes}
+The expected price is determined by the square footage.
+:::
+
+---
+
+# DAG Narrative (continued)
+
+* _Square Footage_ Node($x$): The _Square Footage_ is our model input (as noted by the darker fill); we just take the observed data as given.
+
+::: {.notes}
+Square footage is the input variable we observe.
+:::
+
+---
+
+# DAG Narrative (continued)
+
+* All other yet-to-be discussed nodes are outside the _Observations_ plate. Therefore, each prediction from the model will use a constant value for each of these nodes. The node we are most interested in is _Slope Coeff_, $\beta$, as this is as an estimate of how home prices change when Build-It adds square footage. _Intercept_ just sets some base-level home value and _Price Std. Dev._ gives a measure of how much home prices vary about the calculated expected price, $\mu$.
+
+::: {.notes}
+The slope coefficient is the key business metric.
+:::
+
+---
+
+# Further Reading
+
+For a nice companion guide to interpretable machine learning methods and techniques, see:
+
+**Molnar, C. (2023). Interpretable Machine Learning: A Guide for Making Black Box Models Explainable.** Available at: https://christophm.github.io/interpretable-ml-book/
+
+::: {.notes}
+This is an excellent resource for learning more about interpretable ML.
+:::
+
+---
+
+# Key Takeaway
+
+*"The most compelling analysts unify narrative, math, and code."*
+
+::: {.notes}
+This quote captures the essence of good data analysis.
+:::
+
+---
+
+# Questions?
+
+## Thank you for your attention!
+
+::: {.notes}
+This concludes the presentation on interpretable data models.
+:::

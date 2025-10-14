@@ -1,0 +1,1025 @@
+---
+title: "Generative Models and Simulation"
+subtitle: "Recipes for Simulating Synthetic Data from Assumptions"
+format:
+  html: default
+  pdf: default
+execute:
+  echo: true
+  eval: true
+---
+
+# 📈 Generative Models and Simulation
+
+## What is a Generative Model?
+
+::: {.callout-note}
+## Definition: Generative DAG
+
+A generative DAG is a mathematical object (a directed acyclic graph) where nodes are random variables (or computed from random variables) and arrows show which random variables need to be computed before others. It serves as a step-by-step recipe for simulating synthetic data from assumptions.
+:::
+
+## Node Types (Only Two)
+
+::: {.columns}
+::: {.column width="50%"}
+### Stochastic Nodes (Random Draws)
+
+**Instruction:** "Draw from a distribution."
+
+**Notation:** e.g. $x \sim \text{Bernoulli}(\theta)$
+
+**Recipe analogy:** "Take a random scoop from this bowl."
+:::
+
+::: {.column width="50%"}
+### Deterministic Nodes (Functions)
+
+**Instruction:** "Compute from inputs."
+
+**Notation:** = e.g. $W = \begin{cases} 100 & \text{if } X = 1 \\ -100 & \text{if } X = 0 \end{cases}$
+
+**Recipe analogy:** "Mix these ingredients using this rule."
+:::
+:::
+
+## Example: $100 Bet on a Coin Flip
+
+::: {.columns}
+::: {.column width="50%"}
+### R Syntax (ifelse)
+
+```{python}
+#| echo: false
+#| include: false
+import daft
+from functools import partialmethod
+
+class DAG(daft.PGM):
+    def __init__(self, *args, **kwargs):
+        daft.PGM.__init__(self, *args, **kwargs)
+        self.truth = "The most compelling analysts unify narrative, math, and code."
+
+    latentNode = partialmethod(daft.PGM.add_node, aspect = 4, fontsize = 9.25, plot_params = {'facecolor': 'aliceblue'})
+    observedNode = partialmethod(daft.PGM.add_node, aspect = 4, fontsize = 9.25, plot_params = {'facecolor': 'thistle'})
+    deterministicNode = partialmethod(daft.PGM.add_node, aspect = 5.4, fontsize = 9.25, alternate = True, plot_params = {'facecolor': 'aliceblue'})
+
+coinDAG_R = DAG(dpi = 150, alternate_style="outer")
+coinDAG_R.latentNode("X","Coin Flip\n"+r"$X \sim \text{Bernoulli}(0.5)$",x = 1, y = 1)
+coinDAG_R.deterministicNode("W","Winnings\n"+r"$W = \text{ifelse}(X=1, 100, -100)$",x = 1, y = 0)
+coinDAG_R.add_edge("X","W")
+```
+
+```{python}
+#| label: fig-coin-flip-r
+#| fig-cap: DAG using R ifelse syntax
+#| echo: false
+coinDAG_R.show()
+```
+:::
+
+::: {.column width="50%"}
+### Python Syntax (ternary)
+
+```{python}
+#| echo: false
+#| include: false
+import daft
+from functools import partialmethod
+
+class DAG(daft.PGM):
+    def __init__(self, *args, **kwargs):
+        daft.PGM.__init__(self, *args, **kwargs)
+        self.truth = "The most compelling analysts unify narrative, math, and code."
+
+    latentNode = partialmethod(daft.PGM.add_node, aspect = 4, fontsize = 9.25, plot_params = {'facecolor': 'aliceblue'})
+    observedNode = partialmethod(daft.PGM.add_node, aspect = 4, fontsize = 9.25, plot_params = {'facecolor': 'thistle'})
+    deterministicNode = partialmethod(daft.PGM.add_node, aspect = 5.4, fontsize = 9.25, alternate = True, plot_params = {'facecolor': 'aliceblue'})
+
+coinDAG_Python = DAG(dpi = 150, alternate_style="outer")
+coinDAG_Python.latentNode("X","Coin Flip\n"+r"$X \sim \text{Bernoulli}(0.5)$",x = 1, y = 1)
+coinDAG_Python.deterministicNode("W","Winnings\n"+r"$W = 100 \text{ if X==1 else -100}$",x = 1, y = 0)
+coinDAG_Python.add_edge("X","W")
+```
+
+```{python}
+#| label: fig-coin-flip-python
+#| fig-cap: DAG using Python ternary syntax
+#| echo: false
+coinDAG_Python.show()
+```
+:::
+:::
+
+## Simulation Recipe in R and Python
+
+::: {.panel-tabset}
+
+### R
+
+```{r}
+#| label: sim-r
+#| fig-cap: R simulation of coin flip and winnings
+#| echo: true
+
+library(tidyverse)
+
+# Set seed for reproducibility
+set.seed(123)
+
+# Number of simulations
+n_sims <- 10
+
+# Create simulation data using tibble and tidyverse
+sim_data <- tibble(
+  sim_num = 1:n_sims,
+  coin_flip = rbinom(n = n_sims, size = 1, prob = 0.5)
+) %>%
+  mutate(
+    winnings = if_else(coin_flip == 1, 100, -100)
+  )
+
+# Display results
+sim_data
+```
+
+### Python
+
+```{python}
+#| label: sim-python
+#| fig-cap: Python simulation of coin flip and winnings
+#| echo: true
+
+import numpy as np
+import pandas as pd
+
+# Set seed for reproducibility
+np.random.seed(123)
+
+# Number of simulations
+n_sims = 10
+
+# Step 1: Draw coin flips (stochastic node)
+X = np.random.binomial(n=1, p=0.5, size=n_sims)
+
+# Step 2: Compute winnings (deterministic node)
+W = np.where(X == 1, 100, -100)
+
+# Combine into data frame
+sim_data = pd.DataFrame({
+    'sim_num': range(1, n_sims + 1),
+    'coin_flip': X,
+    'winnings': W
+})
+
+# Display results
+sim_data
+```
+
+:::
+
+## Using Simulation Output To Give Representative Samples and Use Representative Samples to Answer Questions
+
+Example, what percentage of simulations result in a profit?
+
+::: {.panel-tabset}
+
+### R
+
+```{r}
+#| label: profit-analysis-r
+#| fig-cap: R analysis of profit percentage
+#| echo: true
+
+# Calculate percentage of simulations with profit (winnings > 0)
+profit_percentage <- sim_data %>%
+  summarise(
+    total_sims = n(),
+    profitable_sims = sum(winnings > 0),
+    profit_percentage = round(100 * mean(winnings > 0), 1)
+  )
+
+# Display results
+profit_percentage
+
+# Show the breakdown
+sim_data %>%
+  count(coin_flip, winnings) %>%
+  mutate(
+    percentage = round(100 * n / sum(n), 1)
+  )
+```
+
+### Python
+
+```{python}
+#| label: profit-analysis-python
+#| fig-cap: Python analysis of profit percentage
+#| echo: true
+
+# Calculate percentage of simulations with profit (winnings > 0)
+total_sims = len(sim_data)
+profitable_sims = (sim_data['winnings'] > 0).sum()
+profit_percentage = round(100 * (sim_data['winnings'] > 0).mean(), 1)
+
+# Display results
+print(f"Total simulations: {total_sims}")
+print(f"Profitable simulations: {profitable_sims}")
+print(f"Profit percentage: {profit_percentage}%")
+
+# Show the breakdown
+breakdown = sim_data.groupby(['coin_flip', 'winnings']).size().reset_index(name='count')
+breakdown['percentage'] = round(100 * breakdown['count'] / breakdown['count'].sum(), 1)
+breakdown
+```
+
+:::
+
+## Generating Representative Samples
+
+So far, we have represented uncertainty in a simple coin flip - just one random variable. As we try to model more complex aspects of the business world, we will seek to understand relationships between random variables (e.g. price and demand for oil). Starting with our simple building block of drawing an oval to represent one random variable, we will now draw multiple ovals to represent multiple random variables. Let's look at an example with more than one random variable:
+
+::: {#exm-binoMOutput}
+The XYZ Airlines company owns the one plane shown in @fig-airlineXYZ. XYZ operates a 3-seater airplane to show tourists the Great Barrier Reef in Cairns, Australia. The company uses a reservation system, wherein tourists call in advance and make a reservation for aerial viewing the following day. Unfortunately, often passengers holding a reservation might not show up for their flight. Assume that the probability of each passenger not showing up for a flight is 15% and that each passenger's arrival probability is independent of the other passengers. Assuming XYZ takes three reservations, use your ability to simulate the Bernoulli distribution to estimate a random variable representing the number of passengers that show up for the flight.
+:::
+
+To solve this problem, we can represent it mathematically with three random variables for individual passengers and one deterministic variable for the total:
+
+```{python}
+#| echo: false
+#| include: false
+import daft
+from functools import partialmethod
+
+class DAG(daft.PGM):
+    def __init__(self, *args, **kwargs):
+        daft.PGM.__init__(self, *args, **kwargs)
+        self.truth = "The most compelling analysts unify narrative, math, and code."
+
+    latentNode = partialmethod(daft.PGM.add_node, aspect = 4, fontsize = 9.25, plot_params = {'facecolor': 'aliceblue'})
+    observedNode = partialmethod(daft.PGM.add_node, aspect = 4, fontsize = 9.25, plot_params = {'facecolor': 'thistle'})
+    deterministicNode = partialmethod(daft.PGM.add_node, aspect = 5.4, fontsize = 9.25, alternate = True, plot_params = {'facecolor': 'aliceblue'})
+
+xyzPassengersDAG = DAG(dpi = 150, alternate_style="outer")
+xyzPassengersDAG.latentNode("X1","Passenger 1\n"+r"$X_1 \sim \text{Bernoulli}(0.85)$",x = 0, y = 1)
+xyzPassengersDAG.latentNode("X2","Passenger 2\n"+r"$X_2 \sim \text{Bernoulli}(0.85)$",x = 2.5, y = 1)
+xyzPassengersDAG.latentNode("X3","Passenger 3\n"+r"$X_3 \sim \text{Bernoulli}(0.85)$",x = 5, y = 1)
+xyzPassengersDAG.deterministicNode("Y","Total Passengers\n"+r"$Y = X_1 + X_2 + X_3$",x = 2.5, y = 0)
+xyzPassengersDAG.add_edge("X1","Y")
+xyzPassengersDAG.add_edge("X2","Y")
+xyzPassengersDAG.add_edge("X3","Y")
+```
+
+```{python}
+#| label: fig-xyz-passengers
+#| fig-cap: Graphical model showing individual passenger arrivals and total passengers for XYZ Airlines.
+#| echo: false
+xyzPassengersDAG.show()
+```
+
+```{r}
+#| label: fig-airlineXYZ
+#| fig-cap: How many passengers will show up if XYZ Airlines accepts three reservations.
+#| echo: false
+knitr::include_graphics("graphics/XYZairlines.png")
+```
+
+To solve this problem, we can simulate the arrival of each passenger using Bernoulli distributions and then sum them up to get the total number of passengers who show up.
+
+::: {.panel-tabset}
+
+### R
+
+```{r}
+#| label: xyz-simulation-r
+#| fig-cap: R simulation of XYZ Airlines passenger arrivals
+#| echo: true
+
+library(tidyverse)
+
+# Set parameters
+numFlights <- 1000  # number of simulated flights
+probShow <- 0.85    # probability of passenger showing up (1 - 0.15)
+
+# Set seed for reproducibility
+set.seed(111)
+
+# Simulate each passenger's arrival (Bernoulli trials)
+passenger1 <- rbinom(n = numFlights, size = 1, prob = probShow)
+passenger2 <- rbinom(n = numFlights, size = 1, prob = probShow)
+passenger3 <- rbinom(n = numFlights, size = 1, prob = probShow)
+
+# Calculate total passengers for each flight
+totalPassengers <- passenger1 + passenger2 + passenger3
+
+# Create results data frame
+flightResults <- tibble(
+  flightNum = 1:numFlights,
+  passenger1 = passenger1,
+  passenger2 = passenger2,
+  passenger3 = passenger3,
+  totalPassengers = totalPassengers
+)
+
+# Show first 10 flights
+head(flightResults, 10)
+
+# Calculate summary statistics
+summaryStats <- flightResults %>%
+  group_by(totalPassengers) %>%
+  summarise(
+    count = n(),
+    percentage = round(100 * n() / numFlights, 1)
+  ) %>%
+  arrange(totalPassengers)
+
+print("Distribution of total passengers:")
+summaryStats
+
+# Answer the question: What's the expected number of passengers?
+expectedPassengers <- mean(totalPassengers)
+cat("Expected number of passengers per flight:", round(expectedPassengers, 2))
+```
+
+### Python
+
+```{python}
+#| label: xyz-simulation-python
+#| fig-cap: Python simulation of XYZ Airlines passenger arrivals
+#| echo: true
+
+import numpy as np
+import pandas as pd
+
+# Set parameters
+numFlights = 1000  # number of simulated flights
+probShow = 0.85    # probability of passenger showing up (1 - 0.15)
+
+# Set seed for reproducibility
+np.random.seed(111)
+
+# Simulate each passenger's arrival (Bernoulli trials)
+passenger1 = np.random.binomial(n=1, p=probShow, size=numFlights)
+passenger2 = np.random.binomial(n=1, p=probShow, size=numFlights)
+passenger3 = np.random.binomial(n=1, p=probShow, size=numFlights)
+
+# Calculate total passengers for each flight
+totalPassengers = passenger1 + passenger2 + passenger3
+
+# Create results data frame
+flightResults = pd.DataFrame({
+    'flightNum': range(1, numFlights + 1),
+    'passenger1': passenger1,
+    'passenger2': passenger2,
+    'passenger3': passenger3,
+    'totalPassengers': totalPassengers
+})
+
+# Show first 10 flights
+print("First 10 flights:")
+print(flightResults.head(10))
+
+# Calculate summary statistics
+summaryStats = flightResults.groupby('totalPassengers').size().reset_index(name='count')
+summaryStats['percentage'] = round(100 * summaryStats['count'] / numFlights, 1)
+summaryStats = summaryStats.sort_values('totalPassengers')
+
+print("\nDistribution of total passengers:")
+print(summaryStats)
+
+# Answer the question: What's the expected number of passengers?
+expectedPassengers = totalPassengers.mean()
+print(f"\nExpected number of passengers per flight: {expectedPassengers:.2f}")
+```
+
+:::
+
+Based on our simulation, we can see that:
+
+- **Expected number of passengers**: Approximately 2.55 passengers per flight
+- **Most common outcome**: 3 passengers show up (about 61% of the time)
+- **Empty seats**: There's about a 39% chance of having at least one empty seat
+
+This makes intuitive sense since each passenger has an 85% chance of showing up, so we expect 3 × 0.85 = 2.55 passengers on average.
+
+## Visualizing the Probability Mass Function
+
+Let's create visualizations of the empirical probability mass function for the total number of passengers:
+
+::: {.panel-tabset}
+
+### R (ggplot2)
+
+```{r}
+#| label: xyz-pmf-ggplot
+#| fig-cap: Probability mass function of total passengers (ggplot2)
+#| echo: true
+
+library(ggplot2)
+
+# Create color palette
+colors <- c("aliceblue", "cadetblue", "plum", "mediumpurple")
+
+# Create the plot
+ggplot(summaryStats, aes(x = factor(totalPassengers), y = percentage/100)) +
+  geom_col(fill = colors, color = "black", alpha = 0.8) +
+  geom_text(aes(label = paste0(percentage, "%")), 
+            vjust = -0.5, size = 4, fontface = "bold") +
+  labs(
+    title = "Probability Mass Function: Total Passengers",
+    subtitle = "XYZ Airlines - 3 Reservations, 85% Show-up Rate",
+    x = "Total Passengers",
+    y = "Probability",
+    caption = "Based on 1,000 simulated flights"
+  ) +
+  scale_y_continuous(labels = scales::percent_format(), 
+                     limits = c(0, max(summaryStats$percentage/100) * 1.15)) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 14, face = "bold"),
+    plot.subtitle = element_text(size = 12, color = "gray50"),
+    axis.title = element_text(size = 12),
+    axis.text = element_text(size = 11),
+    panel.grid.minor = element_blank()
+  )
+```
+
+### Python (matplotlib)
+
+```{python}
+#| label: xyz-pmf-matplotlib
+#| fig-cap: Probability mass function of total passengers (matplotlib)
+#| echo: true
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Create color palette
+colors = ['aliceblue', 'cadetblue', 'plum', 'mediumpurple']
+
+# Create the plot
+fig, ax = plt.subplots(figsize=(10, 6))
+
+# Get data for plotting
+passenger_counts = summaryStats['totalPassengers'].values
+probabilities = summaryStats['percentage'].values / 100
+
+# Create bars
+bars = ax.bar(passenger_counts, probabilities, 
+              color=colors, edgecolor='black', alpha=0.8, linewidth=1.2)
+
+# Add probability labels on top of bars
+for bar, prob in zip(bars, probabilities):
+    height = bar.get_height()
+    ax.text(bar.get_x() + bar.get_width()/2., height + 0.01,
+            f'{prob*100:.1f}%', ha='center', va='bottom', 
+            fontsize=12, fontweight='bold')
+
+# Customize the plot
+ax.set_title('Probability Mass Function: Total Passengers\n' + 
+             'XYZ Airlines - 3 Reservations, 85% Show-up Rate', 
+             fontsize=14, fontweight='bold', pad=20)
+ax.set_xlabel('Total Passengers', fontsize=12)
+ax.set_ylabel('Probability', fontsize=12)
+ax.set_xticks(passenger_counts)
+ax.set_ylim(0, max(probabilities) * 1.15)
+
+# Format y-axis as percentages
+ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, p: f'{x*100:.0f}%'))
+
+# Add grid
+ax.grid(True, alpha=0.3, axis='y')
+ax.set_axisbelow(True)
+
+# Add caption
+fig.text(0.5, 0.02, 'Based on 1,000 simulated flights', 
+         ha='center', fontsize=10, style='italic', color='gray')
+
+plt.tight_layout()
+plt.show()
+```
+
+:::
+
+## Mathematics As A Simulation Shortcut
+
+Simulation will always be your friend in the sense that if given enough time, a simulation will always give you results that approximate mathematical exactness. The only problem with this friend is it is sometimes slow to yield representative results. In these cases, sometimes mathematics provides a shortcut. The shortcut we study here is to define a probability distribution.
+
+### Probability Distributions and Their Parameters
+
+One cool math shortcut is to use named probability distributions. Each named distribution (e.g. Bernoulli, normal, uniform, etc.) has a set of parameters (i.e. values provided by you) that once specified tell you everything there is to know about a random variable - let's call it $X$. Previously, we learned that $p$ is the one parameter of a Bernoulli distribution and it can be used to describe $X$ as such:
+
+$$
+\textrm{Bernoulli}(p)
+$$
+
+Once we give $p$ a value, say $p=0.4$, then we know everything there is to know about random variable $X$. Specifically, we know its possible values (i.e. 0 or 1) and we know the probability of those values:
+
+| Realization ($x$) | $f(x)$ |
+|:-----------:|:-------:|
+|     0     |     $60\%$     |
+|     1     |     $40\%$     |
+
+This is the shortcut. Once you name a distribution and supply its parameters, then its potential values and their likelihood are fully specified.
+
+### The Binomial Distribution
+
+::: {.column-margin}
+The two parameters of a binomial distribution map to the real-world in a fairly intuitive manner. The first parameter, $n$, is simply the number of Bernoulli trials your random variable will model. The second parameter, $p$, is the probability of observing success on each trial. So if $X \equiv \textrm{number of heads in 10 coin tosses}$ and $X \sim \textrm{Binomial}(n=10, p=0.5)$, then an outcome of $x=4$ means that four heads were observed in 10 coin flips.
+:::
+
+A particularly useful two-parameter distribution was derived as a generalization of a Bernoulli distribution. None other than Jacob Bernoulli himself realized that just one Bernoulli trial is sort of uninteresting (would you predict the next president by polling just one person?). Hence, he created the **binomial distribution**.
+
+The binomial distribution is a two-parameter distribution. You specify the values for the two parameters and then, you know everything there is to know about a random variable which is binomially distributed. The distribution models scenarios where we are interested in the cumulative outcome of successive Bernoulli trials - something like the number of heads in multiple coin flips or the number of passengers that arrive given three reservations. More formally, a binomial distributed random variable (let's call it $X$) represents the number of successes in $n$ Bernoulli trials where each trial has success probability $p$. $n$ and $p$ are the two-parameters that need to be specified.
+
+Going back to our airplane example (@exm-binoMOutput), we can take advantage of the mathematical shortcut provided by the binomial distribution and use the following graphical/statistical model combination to yield exact results. The graphical model is just a simple oval:
+
+```{python}
+#| echo: false
+#| include: false
+import daft
+from functools import partialmethod
+
+class DAG(daft.PGM):
+    def __init__(self, *args, **kwargs):
+        daft.PGM.__init__(self, *args, **kwargs)
+        self.truth = "The most compelling analysts unify narrative, math, and code."
+
+    latentNode = partialmethod(daft.PGM.add_node, aspect = 4, fontsize = 9.25, plot_params = {'facecolor': 'aliceblue'})
+    observedNode = partialmethod(daft.PGM.add_node, aspect = 4, fontsize = 9.25, plot_params = {'facecolor': 'thistle'})
+    deterministicNode = partialmethod(daft.PGM.add_node, aspect = 5.4, fontsize = 9.25, alternate = True, plot_params = {'facecolor': 'aliceblue'})
+
+xyzBinomDAG = DAG(dpi = 150, alternate_style="outer")
+xyzBinomDAG.latentNode("Y","Total Passengers\n"+r"$Y \sim \text{Binomial}(3, 0.85)$",x = 1, y = 1)
+```
+
+```{python}
+#| label: fig-rvXYZbinom
+#| fig-cap: The graphical model of number of passengers who show up for the XYZ airlines tour using binomial distribution.
+#| echo: false
+xyzBinomDAG.show()
+```
+
+And, the statistical model is represented like this:
+
+$$
+\begin{aligned}
+Y &\equiv \textrm{Total number of passengers that show up.}\\
+Y &\sim \textrm{Binomial}(n = 3, p = 0.85)
+\end{aligned}
+$$
+
+For just about any named probability distribution, like the _binomial_ distribution, both R and Python can be used to both answer questions about the probability of certain values being realized, as well as, to generate random realizations of a random variable following that distribution. We just need to know the right function to use.
+
+::: {.column-margin}
+`foo` is called a placeholder name in computer programming. The word `foo` itself is meaningless, but you will substitute more meaningful words in its place. In the examples here, `foo` will be replaced by an abbreviated probability distribution name like `binom` or `norm`.
+:::
+
+* `dfoo()` - is the probability mass function or the probability density function (PDF). For **discrete** random variables, the PDF is $Pr(X=x)$. A user inputs $x$ and parameters of $X$'s distribution, the function returns $Pr(X=x)$. For continuous random variables, this number is less interpretable (see [this Khan Academy video](https://www.khanacademy.org/math/statistics-probability/random-variables-stats-library/random-variables-continuous/v/probability-density-functions) for more background information). Typical math notation for this function is $f(x)$.
+* `pfoo()` - is the cumulative distribution function (CDF). User inputs $q$ and specifies parameters of the distribution, the CDF returns a probability $p$ such that $Pr(X \leq q)=p$. Typical math notation for this function is $F(q)$.
+* `qfoo()` - is the quantile function. User inputs $p$ and parameters of the distribution, this returns the realization value $q$ such that $Pr(X \leq q) = p$. Corresponding math notation for this function is $F^{-1}(p)$.
+* `rfoo()` - is the random generation function. User inputs $n$ and the distribution parameters, this returns $n$ random observations of the random variable.
+
+::: {.column-margin}
+Take notice of the transformation from the math world to the computation world. In the math world, we might say $Y \sim \textrm{Binomial}(n=3,p=0.85)$. But in the computation world, $n$ is replaced by the `size` argument and $p$ is replaced by the `prob` argument. Also notice that `n` is an argument of the random generation function, but it is not the same as the math-world $n$. In the computer-world `n` is the number of random observations of a specified distribution that you want generated. So if you wanted 10 samples of $Y$, you would use the function `rbinom(n=10,size=3,prob=0.85)` in R or `np.random.binomial(n=10,size=3,p=0.85)` in Python. Be careful when doing these translations.
+:::
+
+Since we are interested in the binomial distribution, we can replace `foo` by `binom` to take advantage of the probability distribution functions listed above. For example, to answer "what is the probability there is at least one empty seat?" We find $1 - Pr(Y=3)$ which is the same as `1 - dbinom(x=3, size = 3, prob = 0.85)` in R or `1 - scipy.stats.binom.pmf(3, 3, 0.85)` in Python.
+
+To reproduce our approximated results using the exact distribution:
+
+::: {.panel-tabset}
+
+### R
+
+```{r}
+#| label: xyz-exact-r
+#| fig-cap: Exact binomial probabilities for XYZ Airlines
+#| echo: true
+
+# transform data to give exact proportions
+propExactDF = tibble(totalPassengers = 0:3) %>%
+  mutate(proportion = 
+           dbinom(x = totalPassengers,
+                  size = 3,
+                  prob = 0.85))
+
+# plot data with exact estimates
+ggplot(propExactDF, aes(x = totalPassengers, 
+                        y = proportion)) +
+  geom_col(fill = "cadetblue", alpha = 0.8) +
+  geom_text(aes(label = round(proportion, 3)), 
+            nudge_y = 0.03, fontface = "bold") +
+  labs(title = "Exact Binomial Distribution",
+       subtitle = "XYZ Airlines - 3 Reservations, 85% Show-up Rate",
+       x = "Total Passengers",
+       y = "Probability") +
+  scale_y_continuous(labels = scales::percent_format()) +
+  theme_minimal()
+
+# Answer the question about empty seats
+prob_no_empty_seats = dbinom(x = 3, size = 3, prob = 0.85)
+prob_at_least_one_empty = 1 - prob_no_empty_seats
+cat("Probability of at least one empty seat:", round(prob_at_least_one_empty, 3))
+```
+
+### Python
+
+```{python}
+#| label: xyz-exact-python
+#| fig-cap: Exact binomial probabilities for XYZ Airlines
+#| echo: true
+
+from scipy import stats
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# transform data to give exact proportions
+propExactDF = pd.DataFrame({
+    'totalPassengers': range(4),
+    'proportion': [stats.binom.pmf(x, 3, 0.85) for x in range(4)]
+})
+
+# plot data with exact estimates
+fig, ax = plt.subplots(figsize=(8, 5))
+bars = ax.bar(propExactDF['totalPassengers'], propExactDF['proportion'], 
+              color='cadetblue', alpha=0.8, edgecolor='black')
+ax.set_title('Exact Binomial Distribution\nXYZ Airlines - 3 Reservations, 85% Show-up Rate', 
+             fontsize=14, fontweight='bold')
+ax.set_xlabel('Total Passengers', fontsize=12)
+ax.set_ylabel('Probability', fontsize=12)
+ax.set_xticks(range(4))
+
+# add probability labels on bars
+for bar, prob in zip(bars, propExactDF['proportion']):
+    height = bar.get_height()
+    ax.text(bar.get_x() + bar.get_width()/2., height + 0.01,
+            f'{prob:.3f}', ha='center', va='bottom', 
+            fontsize=12, fontweight='bold')
+
+# format y-axis as percentages
+ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, p: f'{x*100:.0f}%'))
+ax.grid(True, alpha=0.3, axis='y')
+
+plt.tight_layout()
+plt.show()
+
+# Answer the question about empty seats
+prob_no_empty_seats = stats.binom.pmf(3, 3, 0.85)
+prob_at_least_one_empty = 1 - prob_no_empty_seats
+print(f"Probability of at least one empty seat: {prob_at_least_one_empty:.3f}")
+```
+
+:::
+
+The above code is both simpler and faster than the approximation code run earlier. In addition, it gives exact results. Hence, when we can take mathematical shortcuts, we will to save time and reduce the uncertainty in our results introduced by approximation error.
+
+## Hierarchical Parameters: When Parameters Are Random Variables
+
+Sometimes the parameters of our distributions are themselves uncertain. Consider a scenario where we don't know the exact show-up probability for passengers, but we know it's somewhere between 50% and 100%.
+
+::: {.column-margin}
+```{python}
+#| fig-width: 3
+#| fig-height: 2
+#| fig-dpi: 150
+#| echo: false
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Uniform distribution from 0.5 to 1
+x = np.linspace(0.3, 1.2, 1000)
+pdf = np.where((x >= 0.5) & (x <= 1), 2, 0)
+
+plt.figure(figsize=(3, 2))
+plt.plot(x, pdf, color='cadetblue', linewidth=2)
+plt.fill_between(x, pdf, alpha=0.3, color='aliceblue')
+plt.title('Uniform(0.5, 1)', fontsize=10, fontweight='bold', color='#2c3e50')
+plt.ylabel('Density', fontsize=8, fontweight='bold')
+plt.xlabel('Probability', fontsize=8, fontweight='bold')
+plt.xticks([0.5, 1], fontsize=8)
+plt.yticks([0, 2], fontsize=8)
+plt.grid(True, alpha=0.3)
+plt.ylim(0, 2.5)
+plt.tight_layout()
+plt.show()
+```
+:::
+
+```{python}
+#| echo: false
+#| include: false
+import daft
+from functools import partialmethod
+
+class DAG(daft.PGM):
+    def __init__(self, *args, **kwargs):
+        daft.PGM.__init__(self, *args, **kwargs)
+        self.truth = "The most compelling analysts unify narrative, math, and code."
+
+    latentNode = partialmethod(daft.PGM.add_node, aspect = 4, fontsize = 9.25, plot_params = {'facecolor': 'aliceblue'})
+    observedNode = partialmethod(daft.PGM.add_node, aspect = 4, fontsize = 9.25, plot_params = {'facecolor': 'thistle'})
+    deterministicNode = partialmethod(daft.PGM.add_node, aspect = 5.4, fontsize = 9.25, alternate = True, plot_params = {'facecolor': 'aliceblue'})
+
+hierarchicalDAG = DAG(dpi = 150, alternate_style="outer")
+hierarchicalDAG.deterministicNode("n","Number of Reservations\n"+r"$n = 3$",x = 0, y = 1, aspect = 5)
+hierarchicalDAG.latentNode("p","Show-up Probability\n"+r"$p \sim \text{Uniform}(0.5, 1)$",x = 3, y = 1, aspect = 5)
+hierarchicalDAG.latentNode("Y","Total Passengers\n"+r"$Y \sim \text{Binomial}(n, p)$",x = 1.5, y = 0, aspect = 5)
+hierarchicalDAG.add_edge("n","Y")
+hierarchicalDAG.add_edge("p","Y")
+```
+
+```{python}
+#| label: fig-hierarchical-params
+#| fig-cap: Hierarchical model where parameters are random variables
+#| echo: false
+hierarchicalDAG.show()
+```
+
+### Simulation with Uncertain Parameters
+
+::: {.panel-tabset}
+
+### R
+
+```{r}
+#| label: hierarchical-sim-r
+#| fig-cap: R simulation with uncertain show-up probability
+#| echo: true
+
+library(tidyverse)
+
+# Set seed for reproducibility
+set.seed(456)
+
+# Number of simulations
+n_sims <- 1000
+
+# Simulate the hierarchical model
+hierarchical_sim <- tibble(
+  sim_num = 1:n_sims,
+  # Draw show-up probability from uniform(0.5, 1)
+  p = runif(n_sims, 0.5, 1),
+  # Draw total passengers from binomial(n=3, p)
+  total_passengers = rbinom(n_sims, size = 3, prob = p)
+)
+
+# Show first 10 simulations
+head(hierarchical_sim, 10)
+
+# Calculate empirical PMF
+empirical_pmf <- hierarchical_sim %>%
+  count(total_passengers) %>%
+  mutate(probability = n / n_sims) %>%
+  arrange(total_passengers)
+
+print("Empirical Probability Mass Function:")
+empirical_pmf
+```
+
+### Python
+
+```{python}
+#| label: hierarchical-sim-python
+#| fig-cap: Python simulation with uncertain show-up probability
+#| echo: true
+
+import numpy as np
+import pandas as pd
+
+# Set seed for reproducibility
+np.random.seed(456)
+
+# Number of simulations
+n_sims = 1000
+
+# Simulate the hierarchical model
+p_values = np.random.uniform(0.5, 1, n_sims)
+total_passengers = np.random.binomial(n=3, p=p_values)
+
+hierarchical_sim = pd.DataFrame({
+    'sim_num': range(1, n_sims + 1),
+    'p': p_values,
+    'total_passengers': total_passengers
+})
+
+# Show first 10 simulations
+print("First 10 simulations:")
+print(hierarchical_sim.head(10))
+
+# Calculate empirical PMF
+empirical_pmf = hierarchical_sim['total_passengers'].value_counts().sort_index()
+empirical_pmf = empirical_pmf / n_sims
+
+print("\nEmpirical Probability Mass Function:")
+print(empirical_pmf)
+```
+
+:::
+
+### Visualizing the Hierarchical PMF
+
+::: {.panel-tabset}
+
+### R (ggplot2)
+
+```{r}
+#| label: hierarchical-pmf-ggplot
+#| fig-cap: PMF for hierarchical model (ggplot2)
+#| echo: true
+
+library(ggplot2)
+
+# Create the plot
+ggplot(empirical_pmf, aes(x = factor(total_passengers), y = probability)) +
+  geom_col(fill = "mediumpurple", alpha = 0.8, color = "black") +
+  geom_text(aes(label = paste0(round(probability*100, 1), "%")), 
+            vjust = -0.5, size = 4, fontface = "bold") +
+  labs(
+    title = "Hierarchical Model: Total Passengers",
+    subtitle = "n = 3, p ~ Uniform(0.5, 1)",
+    x = "Total Passengers",
+    y = "Probability",
+    caption = "Based on 1,000 simulations"
+  ) +
+  scale_y_continuous(labels = scales::percent_format(), 
+                     limits = c(0, max(empirical_pmf$probability) * 1.15)) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 14, face = "bold"),
+    plot.subtitle = element_text(size = 12, color = "gray50"),
+    axis.title = element_text(size = 12),
+    axis.text = element_text(size = 11)
+  )
+```
+
+### Python (matplotlib)
+
+```{python}
+#| label: hierarchical-pmf-matplotlib
+#| fig-cap: PMF for hierarchical model (matplotlib)
+#| echo: true
+
+import matplotlib.pyplot as plt
+
+# Create the plot
+fig, ax = plt.subplots(figsize=(8, 5))
+
+# Get data for plotting
+passenger_counts = empirical_pmf.index.values
+probabilities = empirical_pmf.values
+
+# Create bars
+bars = ax.bar(passenger_counts, probabilities, 
+              color='mediumpurple', alpha=0.8, edgecolor='black', linewidth=1.2)
+
+# Add probability labels on top of bars
+for bar, prob in zip(bars, probabilities):
+    height = bar.get_height()
+    ax.text(bar.get_x() + bar.get_width()/2., height + 0.01,
+            f'{prob*100:.1f}%', ha='center', va='bottom', 
+            fontsize=12, fontweight='bold')
+
+# Customize the plot
+ax.set_title('Hierarchical Model: Total Passengers\nn = 3, p ~ Uniform(0.5, 1)', 
+             fontsize=14, fontweight='bold', pad=20)
+ax.set_xlabel('Total Passengers', fontsize=12)
+ax.set_ylabel('Probability', fontsize=12)
+ax.set_xticks(passenger_counts)
+ax.set_ylim(0, max(probabilities) * 1.15)
+
+# Format y-axis as percentages
+ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, p: f'{x*100:.0f}%'))
+
+# Add grid
+ax.grid(True, alpha=0.3, axis='y')
+ax.set_axisbelow(True)
+
+# Add caption
+fig.text(0.5, 0.02, 'Based on 1,000 simulations', 
+         ha='center', fontsize=10, style='italic', color='gray')
+
+plt.tight_layout()
+plt.show()
+```
+
+:::
+
+Notice how the hierarchical model creates a different distribution compared to the fixed parameter case. The uncertainty in the show-up probability propagates through to create more variability in the total number of passengers.
+
+# Appendix: DAG Drawing Notes
+
+**Note to ourselves:** We use a custom `DAG` class (inherits from `daft.PGM`) with three specialized node methods:
+
+- `latentNode()` - aliceblue background, aspect=4
+- `observedNode()` - purple background, aspect=4  
+- `deterministicNode()` - aliceblue background, aspect=5.4, alternate=True
+
+The class includes a `truth` attribute and uses `partialmethod` to create these node methods with custom defaults.
+
+**Installation:** `pip install 'daft-pgm'`
+
+```{python}
+#| echo: true
+import daft
+from functools import partialmethod
+
+class DAG(daft.PGM):
+    def __init__(self, *args, **kwargs):
+        daft.PGM.__init__(self, *args, **kwargs)
+        self.truth = "The most compelling analysts unify narrative, math, and code."
+
+    latentNode = partialmethod(daft.PGM.add_node, aspect = 4, fontsize = 9.25, plot_params = {'facecolor': 'aliceblue'})
+    observedNode = partialmethod(daft.PGM.add_node, aspect = 4, fontsize = 9.25, plot_params = {'facecolor': 'thistle'})
+    deterministicNode = partialmethod(daft.PGM.add_node, aspect = 5.4, fontsize = 9.25, alternate = True, plot_params = {'facecolor': 'aliceblue'})
+
+newpgm = DAG(dpi = 150, alternate_style="outer")
+newpgm.observedNode("rev","Rev. Function\n"+r"$(rev)$",x = 0, y = 1)
+newpgm.observedNode("exp","Exp. Function\n"+r"$(exp)$",x = 3, y = 1)
+newpgm.deterministicNode("profit","Profit Function\n"+r"$(\pi = rev- exp)$",x = 1.5, y = 0)
+newpgm.add_edge("rev","profit")
+newpgm.add_edge("exp","profit")
+```
+
+```{python}
+#| label: fig-dag-constructor
+#| fig-cap: DAG constructor example
+#| echo: true
+newpgm.show()
+```
+
+# Appendix: Example DAGs with DAFT
+
+## Simple Bernoulli Random Variable
+
+```{python}
+#| echo: true
+#| include: false
+import daft
+from functools import partialmethod
+
+class DAG(daft.PGM):
+    def __init__(self, *args, **kwargs):
+        daft.PGM.__init__(self, *args, **kwargs)
+        self.truth = "The most compelling analysts unify narrative, math, and code."
+
+    latentNode = partialmethod(daft.PGM.add_node, aspect = 4, fontsize = 9.25, plot_params = {'facecolor': 'aliceblue'})
+    observedNode = partialmethod(daft.PGM.add_node, aspect = 4, fontsize = 9.25, plot_params = {'facecolor': 'thistle'})
+    deterministicNode = partialmethod(daft.PGM.add_node, aspect = 5.4, fontsize = 9.25, alternate = True, plot_params = {'facecolor': 'aliceblue'})
+
+bernoulliDAG = DAG(dpi = 150, alternate_style="outer")
+bernoulliDAG.latentNode("X","Bernoulli RV\n"+r"$X \sim \text{Bernoulli}(0.9)$",x = 1, y = 1)
+```
+
+```{python}
+#| label: fig-bernoulli-example
+#| fig-cap: Simple Bernoulli random variable node
+#| echo: false
+bernoulliDAG.show()
+```
+
+## Canonical Example for Simulation
+
+::: {#exm-ErgodicityEconomicsExample}
+Imagine you are offered the following game and given a $1,000 budget in a special account to play the game: I will flip a coin, and if it comes up heads, we increase your account's balance by 50%; if it comes up tails, we reduce your account's balance by 40%.  We are not only doing this once, but we will do it once per year until you turn 55.  When you turn 55, you will receive the balance in your account.
+:::
+
+### Minimum Requirements for Any Points on Challenge
+
+1. You must write a concise quarto markdown file that includes a narrative of what you are doing along with the requested code, results, and visualizations of your simulations.
+2. You must render the quarto markdown file to HTML.
+3. The rendered HTML must be uploaded to a new GitHub repository called "simulationChallenge" in your Github account.
+4. The repository should be made the source of your github pages:
+   - Go to your repository settings (click the "Settings" tab in your GitHub repository)
+   - Scroll down to the "Pages" section in the left sidebar
+   - Under "Source", select "Deploy from a branch"
+   - Choose "main" branch and "/ (root)" folder
+   - Click "Save"
+   - Your site will be available at: `https://[your-username].github.io/simulationChallenge/`
+   - **Note:** It may take a few minutes for the site to become available after enabling Pages
+
+### Questions to Answer for 75% Grade on Challenge
+
+1. What is the "expected value" of your account balance after 1 coin flip?
+2. Is the expected value positive or negative?  Do you expect your account to be worth more or less than $1,000 based on this result?
+3. Run one simulation showing the dynamics of your account balance over time.  Make an object-oriented matplotlib OR ggplot2 plot showing your simulated account balance over time (i.e. as you age).  Comment on the results, are you happy?
+
+### Questions to Answer for 85% Grade on Challenge
+
+4. Run 100 simulations showing the dynamics of your account balance over time.  Make an object-oriented matplotlib OR ggplot2 plot showing a probability distribution of account balance at age 55.  Comment on the results, are you happy? Why or why not?
+
+### Questions to Answer for 95% Grade on Challenge
+
+5. Based on the 100 simulations above, what is the probability that your account balance will be greater than $1,000 at age 55?
+
+### Questions to Answer for 100% Grade on Challenge
+
+6. Run 100 simulations for the modified @exm-ErgodicityEconomicsExampleModified shown below, what is the probability that your account balance will be greater than $10,000 at age 55? Is this probability higher or lower than the probability in the original game?
+
+::: {#exm-ErgodicityEconomicsExampleModified}
+Imagine you are offered the following game and given a $1,000 budget in a special account to play the game: I will flip a coin, and if it comes up heads, we increase your bet by 50%; if it comes up tails, we reduce your bet by 40%.  You must bet exactly 50% of your current account balance on each flip, and this 50% is locked in for each round.  We are not only doing this once, but we will do it once per year until you turn 55.  When you turn 55, you will receive the balance in your account.
+:::
+
+

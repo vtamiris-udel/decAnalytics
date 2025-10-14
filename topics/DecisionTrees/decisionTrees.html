@@ -1,0 +1,1775 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.33">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Decision Trees</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="decisionTrees_files/libs/clipboard/clipboard.min.js"></script>
+<script src="decisionTrees_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="decisionTrees_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="decisionTrees_files/libs/quarto-html/popper.min.js"></script>
+<script src="decisionTrees_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="decisionTrees_files/libs/quarto-html/anchor.min.js"></script>
+<link href="decisionTrees_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="decisionTrees_files/libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="decisionTrees_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="decisionTrees_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="decisionTrees_files/libs/bootstrap/bootstrap-bb462d781dde1847d9e3ccf7736099dd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="decisionTrees.pdf"><i class="bi bi-file-pdf"></i>PDF</a></li></ul></div></div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Decision Trees</h1>
+<p class="subtitle lead">From Linear Slopes to Branching Logic</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="decision-trees" class="level1">
+<h1>🌳 Decision Trees</h1>
+<section id="the-core-idea" class="level2">
+<h2 class="anchored" data-anchor-id="the-core-idea">The Core Idea</h2>
+<p>Decision trees represent a fundamental shift from linear models to non-linear, rule-based approaches. While linear regression assumes relationships can be captured by straight lines, decision trees recognize that real-world relationships often require more flexible, branching logic.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<section id="linear-models" class="level3">
+<h3 class="anchored" data-anchor-id="linear-models">Linear Models</h3>
+<p>Assume relationships follow straight lines with constant slopes.</p>
+<p><strong>Example:</strong> Anxiety increases by 0.1 units for every minute of social media use.</p>
+</section>
+</div><div class="column" style="width:50%;">
+<section id="decision-trees-1" class="level3">
+<h3 class="anchored" data-anchor-id="decision-trees-1">Decision Trees</h3>
+<p>Split data into distinct groups based on threshold values.</p>
+<p><strong>Example:</strong> If social media time &gt; 2 hours, then anxiety is high; otherwise, anxiety depends on other factors.</p>
+</section>
+</div>
+</div>
+</section>
+<section id="the-anxiety-prediction-challenge" class="level2">
+<h2 class="anchored" data-anchor-id="the-anxiety-prediction-challenge">The Anxiety Prediction Challenge</h2>
+<p>Our goal is to predict anxiety levels using available data. Let’s start with the simplest approach and progressively add complexity to see how our predictions improve.</p>
+<section id="the-anxiety-and-social-media-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="the-anxiety-and-social-media-dataset">The Anxiety and Social Media Dataset</h3>
+<p>Consider a study examining the relationship between social media usage and anxiety levels. We have data on time spent on social media (in hours) and stress survey responses, with corresponding anxiety levels measured by fMRI activity.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🔍 Understanding the True Relationship: Implied Coefficients
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Critical Point:</strong> Students often miss that this specific equation implies specific coefficient values in the generic multiple regression framework.</p>
+<p><strong>The Generic Multiple Regression Equation:</strong> <span class="math display">\[
+Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \epsilon
+\]</span></p>
+<p><strong>In Our Case:</strong> <span class="math display">\[
+Anxiety = \beta_0 + \beta_1 \times Stress + \beta_2 \times Time + \epsilon
+\]</span></p>
+<p><strong>The True Coefficients (what we “know”):</strong></p>
+<ul>
+<li><span class="math inline">\(\beta_0 = 0\)</span> (intercept is zero)</li>
+<li><span class="math inline">\(\beta_1 = 1\)</span> (coefficient on Stress is 1)<br>
+</li>
+<li><span class="math inline">\(\beta_2 = 0.1\)</span> (coefficient on Time is 0.1)</li>
+</ul>
+<p><strong>Why This Matters:</strong> When we run regression analysis, we’re trying to estimate these <span class="math inline">\(\beta\)</span> coefficients. If our regression gives us coefficients that are very different from these true values, we know our model is wrong—even if it has good statistical fit!</p>
+</div>
+</div>
+<div id="cell-fig-trueRelationshipDag" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<div id="fig-truerelationshipdag" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-truerelationshipdag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="decisionTrees_files/figure-html/fig-truerelationshipdag-output-1.png" width="644" height="291" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-truerelationshipdag-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: True generative DAG model for anxiety prediction showing the correct relationship: Anxiety = Stress + 0.1 × Time
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="tbl-anxiety-data" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="4">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-anxiety-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Anxiety, social media time, and stress survey dataset
+</figcaption>
+<div aria-describedby="tbl-anxiety-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+
+
+<table class="dataframe do-not-create-environment cell caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Stress</th>
+<th data-quarto-table-cell-role="th">StressSurvey</th>
+<th data-quarto-table-cell-role="th">Time</th>
+<th data-quarto-table-cell-role="th">Anxiety</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>0</td>
+<td>0</td>
+<td>0.0</td>
+<td>0.00</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>0</td>
+<td>0</td>
+<td>1.0</td>
+<td>0.10</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>0</td>
+<td>0</td>
+<td>1.0</td>
+<td>0.10</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>1</td>
+<td>3</td>
+<td>1.0</td>
+<td>1.10</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>1</td>
+<td>3</td>
+<td>1.0</td>
+<td>1.10</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>1</td>
+<td>3</td>
+<td>1.0</td>
+<td>1.10</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>2</td>
+<td>6</td>
+<td>2.0</td>
+<td>2.20</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>2</td>
+<td>6</td>
+<td>2.0</td>
+<td>2.20</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>2</td>
+<td>6</td>
+<td>2.0</td>
+<td>2.20</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>8</td>
+<td>9</td>
+<td>2.0</td>
+<td>8.20</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>8</td>
+<td>9</td>
+<td>2.0</td>
+<td>8.20</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>8</td>
+<td>9</td>
+<td>2.1</td>
+<td>8.21</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>12</td>
+<td>12</td>
+<td>2.2</td>
+<td>12.22</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>12</td>
+<td>12</td>
+<td>2.2</td>
+<td>12.22</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>12</td>
+<td>12</td>
+<td>2.2</td>
+<td>12.22</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section>
+<section id="step-1-predicting-anxiety-with-zero-variables-baseline" class="level3">
+<h3 class="anchored" data-anchor-id="step-1-predicting-anxiety-with-zero-variables-baseline">Step 1: Predicting Anxiety with Zero Variables (Baseline)</h3>
+<p>First, let’s establish our baseline prediction using no independent variables:</p>
+<div id="cell-fig-baseline-prediction" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display">
+<div id="fig-baseline-prediction" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-baseline-prediction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="decisionTrees_files/figure-html/fig-baseline-prediction-output-1.png" width="710" height="517" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-baseline-prediction-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Baseline anxiety prediction using no independent variables
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Baseline Predictions (no variables):
+Mean prediction: 4.76
+Median prediction: 2.20
+Mean Absolute Error (using mean): 4.36
+Mean Absolute Error (using median): 3.85
+
+Interpretation: We predict everyone has anxiety level 4.76 (mean) or 2.20 (median)
+This is our starting point before adding any independent variables.</code></pre>
+</div>
+</div>
+</section>
+<section id="step-2-predicting-anxiety-with-one-variable-time" class="level3">
+<h3 class="anchored" data-anchor-id="step-2-predicting-anxiety-with-one-variable-time">Step 2: Predicting Anxiety with One Variable (Time)</h3>
+<p>Now let’s see how much we can improve by using just social media time:</p>
+<div id="cell-fig-linear-relationship" class="cell" data-execution_count="6">
+<div class="cell-output cell-output-display">
+<div id="fig-linear-relationship" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-linear-relationship-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="decisionTrees_files/figure-html/fig-linear-relationship-output-1.png" width="698" height="517" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-linear-relationship-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Predicting anxiety using social media time (one variable)
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>One-Variable Prediction Results (Time only):
+Slope: 5.3406 (anxiety change per hour)
+Intercept: -3.6801
+Mean Absolute Error: 2.56
+R²: 0.563
+Interpretation: For every additional hour of social media use, anxiety changes by 5.3406 units
+True coefficient should be: 0.1 (positive!)
+Improvement over baseline: 46.2% reduction in MAE</code></pre>
+</div>
+</div>
+</section>
+<section id="step-3-predicting-anxiety-with-two-variables-linear-regression" class="level3">
+<h3 class="anchored" data-anchor-id="step-3-predicting-anxiety-with-two-variables-linear-regression">Step 3: Predicting Anxiety with Two Variables (Linear Regression)</h3>
+<p>Now let’s see what happens when we add the StressSurvey variable to improve our anxiety predictions:</p>
+<div class="cell" data-execution_count="7">
+<div class="cell-output cell-output-stdout">
+<pre><code>Two-Variable Prediction Results (Linear Regression):
+==================================================
+Anxiety = 0.589 + -2.780*Time + 1.427*StressSurvey
+Time coefficient: -2.7799 (should be +0.1)
+StressSurvey coefficient: 1.4269 (should be +1.0)
+Mean Absolute Error: 1.03
+R² = 0.9350
+Improvement over one variable: 59.8% reduction in MAE
+
+🚨 PROBLEM: Time coefficient is -2.7799 instead of +0.1!
+This is the 'garbage can regression' problem in action.</code></pre>
+</div>
+<div id="fig-multiple-regression" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="7">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-multiple-regression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display">
+<div id="fig-multiple-regression-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-multiple-regression-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="decisionTrees_files/figure-html/fig-multiple-regression-output-1.png" data-ref-parent="fig-multiple-regression" width="662" height="373" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-multiple-regression-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Multiple regression analysis showing the garbage can regression problem
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div id="fig-multiple-regression-2" class="quarto-float quarto-figure quarto-figure-center anchored" height="373" width="662">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-multiple-regression-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="decisionTrees_files/figure-html/fig-multiple-regression-output-2.png" id="fig-multiple-regression-2" data-ref-parent="fig-multiple-regression" width="662" height="373" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-multiple-regression-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-multiple-regression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The Garbage Can Regression Problem
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The multiple regression shows a <strong>negative coefficient for Time</strong> when the true relationship should be <strong>positive</strong>! This happens because:</p>
+<ol type="1">
+<li><strong>StressSurvey is a non-linear proxy</strong> for the true Stress variable</li>
+<li><strong>Linear regression assumes linearity</strong> but the relationship is non-linear</li>
+<li><strong>The model compensates</strong> by giving Time a negative coefficient to “correct” for the non-linear StressSurvey effect</li>
+</ol>
+<p><strong>Our anxiety predictions are now misleading!</strong> We’re getting better R² but wrong interpretations. This is exactly why we need decision trees - they can capture these non-linear relationships without making false assumptions about linearity.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="step-4-predicting-anxiety-with-two-variables-decision-trees" class="level2">
+<h2 class="anchored" data-anchor-id="step-4-predicting-anxiety-with-two-variables-decision-trees">Step 4: Predicting Anxiety with Two Variables (Decision Trees)</h2>
+<p>Decision trees offer a fundamentally different approach to predicting anxiety. Instead of assuming linearity, they partition data into distinct groups based on threshold values, potentially giving us better and more interpretable anxiety predictions.</p>
+<section id="what-is-a-decision-tree" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-a-decision-tree">What is a Decision Tree?</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+One-Liner Definition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A <strong>decision tree</strong> is a model that splits data into groups using a series of binary decisions, where each split is based on a threshold value of a feature.</p>
+</div>
+</div>
+</section>
+<section id="the-tree-structure" class="level3">
+<h3 class="anchored" data-anchor-id="the-tree-structure">The Tree Structure</h3>
+<p>Decision trees consist of:</p>
+<ul>
+<li><strong>Root Node</strong>: The starting point containing all data</li>
+<li><strong>Internal Nodes</strong>: Decision points that split data based on conditions</li>
+<li><strong>Leaf Nodes</strong>: Terminal nodes that provide predictions</li>
+<li><strong>Branches</strong>: Paths connecting nodes based on decision outcomes</li>
+</ul>
+</section>
+<section id="building-a-decision-tree-for-anxiety-prediction" class="level3">
+<h3 class="anchored" data-anchor-id="building-a-decision-tree-for-anxiety-prediction">Building a Decision Tree for Anxiety Prediction</h3>
+<p>Let’s see how a decision tree would approach our anxiety prediction challenge using both Time and StressSurvey:</p>
+<div class="cell" data-execution_count="8">
+<div class="cell-output cell-output-stdout">
+<pre><code>Decision Tree Rules:
+==================================================
+1. StressSurvey &lt;= 7.5 AND StressSurvey &lt;= 4.5 → Anxiety = 0.58
+2. StressSurvey &lt;= 7.5 AND StressSurvey &gt; 4.5 → Anxiety = 2.20
+3. StressSurvey &gt; 7.5 AND StressSurvey &lt;= 10.5 → Anxiety = 8.20
+4. StressSurvey &gt; 7.5 AND StressSurvey &gt; 10.5 → Anxiety = 12.22
+
+Two-Variable Prediction Results (Decision Tree):
+Mean Absolute Error: 0.21
+R² = 0.9951
+Improvement over linear regression: 79.9% reduction in MAE
+Improvement over baseline: 95.6% reduction in MAE</code></pre>
+</div>
+<div id="fig-decision-tree-example" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="8">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-decision-tree-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display">
+<div id="fig-decision-tree-example-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-decision-tree-example-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="decisionTrees_files/figure-html/fig-decision-tree-example-output-1.png" data-ref-parent="fig-decision-tree-example" width="661" height="374" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-decision-tree-example-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Decision tree for anxiety prediction using Time and StressSurvey
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div id="fig-decision-tree-example-2" class="quarto-float quarto-figure quarto-figure-center anchored" height="373" width="662">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-decision-tree-example-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="decisionTrees_files/figure-html/fig-decision-tree-example-output-2.png" id="fig-decision-tree-example-2" data-ref-parent="fig-decision-tree-example" width="662" height="373" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-decision-tree-example-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-decision-tree-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5
+</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="how-decision-trees-work-the-cart-algorithm" class="level3">
+<h3 class="anchored" data-anchor-id="how-decision-trees-work-the-cart-algorithm">How Decision Trees Work: The CART Algorithm</h3>
+<p>The Classification and Regression Trees (CART) algorithm builds trees through a recursive process:</p>
+<ol type="1">
+<li><strong>Find Best Split</strong>: For each feature, find the threshold that best separates the data</li>
+<li><strong>Choose Best Feature</strong>: Select the feature and threshold that minimize variance (regression) or Gini impurity (classification)</li>
+<li><strong>Split Data</strong>: Create two child nodes based on the chosen split</li>
+<li><strong>Repeat</strong>: Continue splitting until stopping criteria are met</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Computational Complexity of CART
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>You’re absolutely right!</strong> CART does manually search over potential split points, which can be slow on large datasets:</p>
+<ul>
+<li><strong>For each feature</strong>: CART considers every unique value as a potential split point</li>
+<li><strong>For each split point</strong>: It calculates variance reduction (regression) or Gini impurity (classification)</li>
+<li><strong>Computational cost</strong>: O(n × m × log n) where n = number of samples, m = number of features</li>
+</ul>
+<p><strong>Why this matters:</strong> - <strong>Large datasets</strong>: With millions of rows, this becomes computationally expensive - <strong>Many features</strong>: Each additional feature multiplies the search space - <strong>Modern alternatives</strong>: Algorithms like Random Forest use sampling and parallelization to speed this up</p>
+<p><strong>For our small anxiety dataset</strong>: This is fast, but in real-world applications with large datasets, you’d want to use optimized implementations or ensemble methods.</p>
+</div>
+</div>
+<div class="cell" data-execution_count="9">
+<div id="fig-split-visualization" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="9">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-split-visualization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display">
+<div id="fig-split-visualization-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-split-visualization-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="decisionTrees_files/figure-html/fig-split-visualization-output-1.png" data-ref-parent="fig-split-visualization" width="662" height="469" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-split-visualization-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Visualizing how decision trees find optimal splits using StressSurvey
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div id="fig-split-visualization-2" class="quarto-float quarto-figure quarto-figure-center anchored" height="469" width="662">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-split-visualization-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="decisionTrees_files/figure-html/fig-split-visualization-output-2.png" id="fig-split-visualization-2" data-ref-parent="fig-split-visualization" width="662" height="469" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-split-visualization-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b)
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div id="fig-split-visualization-3" class="quarto-float quarto-figure quarto-figure-center anchored" height="469" width="662">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-split-visualization-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="decisionTrees_files/figure-html/fig-split-visualization-output-3.png" id="fig-split-visualization-3" data-ref-parent="fig-split-visualization" width="662" height="469" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-split-visualization-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c)
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div id="fig-split-visualization-4" class="quarto-float quarto-figure quarto-figure-center anchored" height="469" width="662">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-split-visualization-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="decisionTrees_files/figure-html/fig-split-visualization-output-4.png" id="fig-split-visualization-4" data-ref-parent="fig-split-visualization" width="662" height="469" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-split-visualization-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(d)
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div id="fig-split-visualization-5" class="quarto-float quarto-figure quarto-figure-center anchored" height="470" width="662">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-split-visualization-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="decisionTrees_files/figure-html/fig-split-visualization-output-5.png" id="fig-split-visualization-5" data-ref-parent="fig-split-visualization" width="662" height="470" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-split-visualization-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(e)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-split-visualization-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6
+</figcaption>
+</figure>
+</div>
+</div>
+</section>
+</section>
+<section id="comparing-our-anxiety-prediction-approaches" class="level2">
+<h2 class="anchored" data-anchor-id="comparing-our-anxiety-prediction-approaches">Comparing Our Anxiety Prediction Approaches</h2>
+<section id="summary-how-well-do-we-predict-anxiety" class="level3">
+<h3 class="anchored" data-anchor-id="summary-how-well-do-we-predict-anxiety">Summary: How Well Do We Predict Anxiety?</h3>
+<p>Let’s compare all our approaches to predicting anxiety:</p>
+<div class="cell" data-execution_count="10">
+<div class="cell-output cell-output-stdout">
+<pre><code>Anxiety Prediction Summary:
+==================================================
+0 Variables (Baseline):     MAE: 4.36
+1 Variable (Time only):     MAE: 2.56
+2 Variables (Linear Reg):   MAE: 1.03
+2 Variables (Decision Tree): MAE: 0.21
+
+Key Insights:
+• Adding Time improves predictions by 46.2%
+• Adding StressSurvey (linear) improves by 59.8% more
+• Decision trees improve by 79.9% over linear regression
+• Decision trees can capture the true positive Time effect without being misled
+  by the non-linear StressSurvey relationship!</code></pre>
+</div>
+<div id="fig-model-comparison" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="10">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-model-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display">
+<div id="fig-model-comparison-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-model-comparison-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="decisionTrees_files/figure-html/fig-model-comparison-output-1.png" data-ref-parent="fig-model-comparison" width="662" height="373" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-model-comparison-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Comparing how linear regression and decision trees handle the Time effect
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div id="fig-model-comparison-2" class="quarto-float quarto-figure quarto-figure-center anchored" height="373" width="662">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-model-comparison-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="decisionTrees_files/figure-html/fig-model-comparison-output-2.png" id="fig-model-comparison-2" data-ref-parent="fig-model-comparison" width="662" height="373" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-model-comparison-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-model-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7
+</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="how-is-feature-importance-calculated" class="level3">
+<h3 class="anchored" data-anchor-id="how-is-feature-importance-calculated">How is Feature Importance Calculated?</h3>
+<p>Before we compare feature importance, let’s understand how decision trees calculate it:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Feature Importance Calculation in Decision Trees
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>The basic idea</strong>: Feature importance measures how much each feature contributes to reducing prediction error across all splits in the tree.</p>
+<p><strong>Step-by-step calculation</strong>:</p>
+<ol type="1">
+<li><strong>For each split</strong>: Calculate how much variance/impurity is reduced by that split</li>
+<li><strong>Weight by samples</strong>: Multiply by the number of samples that go through that split</li>
+<li><strong>Sum by feature</strong>: Add up all the weighted reductions for each feature</li>
+<li><strong>Normalize</strong>: Divide by the total reduction to get proportions that sum to 1</li>
+</ol>
+</div>
+</div>
+<p>Let’s see this in action with our anxiety prediction tree:</p>
+<div class="cell" data-execution_count="11">
+<div class="cell-output cell-output-stdout">
+<pre><code>Feature Importance Calculation Process:
+==================================================
+Node 0: Split on StressSurvey &lt;= 7.5
+  Samples: 15, Left: 9, Right: 6
+  Impurity reduction: 0.00
+  Running total for StressSurvey: 0.00
+
+Node 1: Split on StressSurvey &lt;= 4.5
+  Samples: 9, Left: 6, Right: 3
+  Impurity reduction: 0.00
+  Running total for StressSurvey: 0.00
+
+Node 4: Split on StressSurvey &lt;= 10.5
+  Samples: 6, Left: 3, Right: 3
+  Impurity reduction: 0.00
+  Running total for StressSurvey: 0.00
+
+Comparison of Manual vs Sklearn Calculation:
+==================================================
+Time:
+  Manual calculation: 0.000
+  Sklearn calculation: 0.000
+  Difference: 0.000
+
+StressSurvey:
+  Manual calculation: 0.000
+  Sklearn calculation: 1.000
+  Difference: 1.000
+</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Key Insights:
+====================
+• Feature importance measures how much each feature reduces prediction error
+• It's calculated by summing weighted impurity reductions across all splits
+• Features used in early splits (near root) tend to have higher importance
+• The values are normalized so they sum to 1.0
+• This gives us a measure of relative feature importance for anxiety prediction</code></pre>
+</div>
+<div id="fig-feature-importance-calculation" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="11">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-feature-importance-calculation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display">
+<div id="fig-feature-importance-calculation-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-feature-importance-calculation-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="decisionTrees_files/figure-html/fig-feature-importance-calculation-output-2.png" data-ref-parent="fig-feature-importance-calculation" width="661" height="374" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-feature-importance-calculation-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Step-by-step calculation of feature importance in decision trees
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div id="fig-feature-importance-calculation-2" class="quarto-float quarto-figure quarto-figure-center anchored" height="373" width="662">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-feature-importance-calculation-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="decisionTrees_files/figure-html/fig-feature-importance-calculation-output-3.png" id="fig-feature-importance-calculation-2" data-ref-parent="fig-feature-importance-calculation" width="662" height="373" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-feature-importance-calculation-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-feature-importance-calculation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8
+</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="the-critical-insight-feature-importance-reveals-the-truth" class="level3">
+<h3 class="anchored" data-anchor-id="the-critical-insight-feature-importance-reveals-the-truth">The Critical Insight: Feature Importance Reveals the Truth</h3>
+<div class="cell" data-execution_count="12">
+<div class="cell-output cell-output-stdout">
+<pre><code>Feature Importance for Anxiety Prediction:
+==================================================
+Decision Tree Feature Importance:
+  Time importance: 0.000
+  StressSurvey importance: 1.000
+
+Linear Regression Coefficients:
+  Time coefficient: -2.780 (WRONG SIGN!)
+  StressSurvey coefficient: 1.427
+
+🎯 For anxiety prediction:
+   • Decision trees correctly identify that BOTH features matter
+   • Linear regression gives Time the wrong sign due to
+     the non-linear StressSurvey relationship!
+   • This means our anxiety predictions from linear regression
+     are based on incorrect assumptions about how Time affects anxiety</code></pre>
+</div>
+<div id="fig-feature-importance-comparison" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="12">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-feature-importance-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display">
+<div id="fig-feature-importance-comparison-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-feature-importance-comparison-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="decisionTrees_files/figure-html/fig-feature-importance-comparison-output-1.png" data-ref-parent="fig-feature-importance-comparison" width="662" height="374" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-feature-importance-comparison-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Feature importance comparison: Decision trees vs Linear regression coefficients
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div id="fig-feature-importance-comparison-2" class="quarto-float quarto-figure quarto-figure-center anchored" height="374" width="662">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-feature-importance-comparison-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="decisionTrees_files/figure-html/fig-feature-importance-comparison-output-2.png" id="fig-feature-importance-comparison-2" data-ref-parent="fig-feature-importance-comparison" width="662" height="374" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-feature-importance-comparison-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-feature-importance-comparison-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9
+</figcaption>
+</figure>
+</div>
+</div>
+</section>
+</section>
+<section id="decision-tree-interpretation" class="level2">
+<h2 class="anchored" data-anchor-id="decision-tree-interpretation">Decision Tree Interpretation</h2>
+<section id="reading-tree-rules-for-anxiety-prediction" class="level3">
+<h3 class="anchored" data-anchor-id="reading-tree-rules-for-anxiety-prediction">Reading Tree Rules for Anxiety Prediction</h3>
+<p>Decision trees provide interpretable rules that are easy to understand for anxiety prediction:</p>
+<p><strong>Example Interpretation:</strong> - If StressSurvey ≤ 6 → Anxiety = 0.7 (low anxiety) - If StressSurvey &gt; 6 → Anxiety = 9.4 (high anxiety)</p>
+<p>These rules tell us exactly how to predict anxiety based on the input variables, making the model transparent and actionable.</p>
+</section>
+<section id="using-the-tree-for-social-media-recommendations" class="level3">
+<h3 class="anchored" data-anchor-id="using-the-tree-for-social-media-recommendations">Using the Tree for Social Media Recommendations</h3>
+<p>Now let’s analyze what this tree tells us about social media time and anxiety:</p>
+<div id="fig-tree-recommendations" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="13">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tree-recommendations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-stdout">
+<pre><code>Decision Tree Analysis for Social Media Recommendations:
+============================================================
+Tree Structure Analysis:
+Root split: StressSurvey &lt;= 7.5
+Left child: StressSurvey &lt;= 4.5
+Right child: StressSurvey &lt;= 10.5
+
+Key Finding: The tree splits on StressSurvey first, then Time!
+This means StressSurvey is more important for anxiety prediction than Time.
+
+Social Media Time Analysis:
+• When StressSurvey ≤ 6: Time doesn't matter much (anxiety stays low)
+• When StressSurvey &gt; 6: Time still doesn't matter much (anxiety stays high)
+• The tree suggests StressSurvey is the primary driver of anxiety
+
+Recommendation:
+• Focus on stress management rather than just limiting social media time
+• Social media time alone may not be the main anxiety driver
+• Stress levels (measured by survey) are more predictive of anxiety</code></pre>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-tree-recommendations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10
+</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Interpreting the Tree for Social Media Policy
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>What the tree tells us about social media and anxiety:</strong></p>
+<ol type="1">
+<li><strong>StressSurvey is the primary predictor</strong>: The tree splits on StressSurvey first, not Time</li>
+<li><strong>Time has limited impact</strong>: Within each stress level, Time doesn’t create additional splits</li>
+<li><strong>Stress management is key</strong>: The tree suggests addressing stress levels is more important than limiting social media time</li>
+</ol>
+<p><strong>Policy implications:</strong> - <strong>Don’t just limit social media time</strong>: The tree shows Time isn’t the main anxiety driver - <strong>Focus on stress reduction</strong>: StressSurvey is the primary predictor of anxiety - <strong>Holistic approach needed</strong>: Anxiety appears to be driven more by underlying stress than social media usage</p>
+<p><strong>Limitation</strong>: This is a simplified tree with only 2 levels. In reality, Time might have more complex interactions that deeper trees could capture.</p>
+</div>
+</div>
+</section>
+<section id="what-happens-with-more-depth-times-role-in-deeper-trees" class="level3">
+<h3 class="anchored" data-anchor-id="what-happens-with-more-depth-times-role-in-deeper-trees">What Happens with More Depth? Time’s Role in Deeper Trees</h3>
+<p>Let’s see if Time becomes more important when we allow the tree to grow deeper:</p>
+<div id="cell-fig-deeper-tree" class="cell" data-execution_count="14">
+<div class="cell-output cell-output-display">
+<div id="fig-deeper-tree" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-deeper-tree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="decisionTrees_files/figure-html/fig-deeper-tree-output-1.png" width="662" height="374" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-deeper-tree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11: Decision tree with depth=3 to explore Time’s importance
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Deeper Tree Analysis (Depth=3):
+========================================
+Root split: StressSurvey &lt;= 7.5
+
+Time splits: 2
+StressSurvey splits: 3
+
+Time splits found: ['Node 6: Time &lt;= 2.1', 'Node 7: Time &lt;= 2.0']
+StressSurvey splits found: ['Node 0: StressSurvey &lt;= 7.5', 'Node 1: StressSurvey &lt;= 4.5', 'Node 2: StressSurvey &lt;= 1.5']
+
+Feature Importance (Depth=3):
+Time: 0.074
+StressSurvey: 0.926
+
+Comparison with Depth=2:
+Time importance increased: 0.074
+StressSurvey importance decreased: 0.074</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Key Insight: Time Becomes Important with More Depth
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>What we discover with depth=3:</strong></p>
+<ol type="1">
+<li><strong>Time finally appears</strong>: The deeper tree uses Time for splits, showing it does matter</li>
+<li><strong>More balanced importance</strong>: Time gets more weight in the deeper tree</li>
+<li><strong>Complex interactions</strong>: The tree can now capture how Time and StressSurvey interact</li>
+</ol>
+<p><strong>Implication for social media policy:</strong> - <strong>Deeper analysis reveals Time matters</strong>: With more complexity, social media time does affect anxiety - <strong>Context-dependent effects</strong>: Time’s impact depends on stress levels - <strong>Policy nuance needed</strong>: Simple “limit social media” may be too simplistic - the relationship is more complex</p>
+<p><strong>Trade-off</strong>: Deeper trees are more accurate but less interpretable. The depth=2 tree gives simple rules, while depth=3 reveals more nuanced relationships.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="strengths-and-limitations" class="level2">
+<h2 class="anchored" data-anchor-id="strengths-and-limitations">Strengths and Limitations</h2>
+<section id="strengths-of-decision-trees" class="level3">
+<h3 class="anchored" data-anchor-id="strengths-of-decision-trees">Strengths of Decision Trees</h3>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Key Advantages
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Interpretability</strong>: Easy to understand and explain</li>
+<li><strong>No Assumptions</strong>: Don’t require linear relationships</li>
+<li><strong>Feature Interactions</strong>: Naturally capture interactions between variables</li>
+<li><strong>Robust to Outliers</strong>: Less sensitive to extreme values</li>
+<li><strong>Mixed Data Types</strong>: Handle both numerical and categorical features</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="limitations-of-decision-trees" class="level3">
+<h3 class="anchored" data-anchor-id="limitations-of-decision-trees">Limitations of Decision Trees</h3>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Key Disadvantages
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Overfitting</strong>: Can create overly complex trees that don’t generalize</li>
+<li><strong>Instability</strong>: Small data changes can create completely different trees</li>
+<li><strong>Poor Extrapolation</strong>: Don’t predict well outside training data range</li>
+<li><strong>Step Functions</strong>: Create discontinuous predictions (not smooth)</li>
+<li><strong>Bias</strong>: Tend to favor features with many possible splits</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="the-smoothness-problem" class="level3">
+<h3 class="anchored" data-anchor-id="the-smoothness-problem">The Smoothness Problem</h3>
+<div id="cell-fig-smoothness-problem" class="cell" data-execution_count="15">
+<div class="cell-output cell-output-display">
+<div id="fig-smoothness-problem" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-smoothness-problem-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="decisionTrees_files/figure-html/fig-smoothness-problem-output-1.png" width="662" height="373" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-smoothness-problem-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12: Decision trees create step functions, not smooth curves
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The Smoothness Problem:
+==============================
+• Multiple regression: Smooth, continuous predictions
+• Decision trees: Step functions with sudden jumps
+• Real-world implication: Small changes in input can cause large prediction changes
+• Note: This shows predictions as StressSurvey varies (holding Time constant)</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="when-to-use-decision-trees" class="level2">
+<h2 class="anchored" data-anchor-id="when-to-use-decision-trees">When to Use Decision Trees</h2>
+<section id="ideal-scenarios" class="level3">
+<h3 class="anchored" data-anchor-id="ideal-scenarios">Ideal Scenarios</h3>
+<ul>
+<li><strong>Non-linear relationships</strong>: When linear models fail to capture the true relationship</li>
+<li><strong>Feature interactions</strong>: When variables interact in complex ways</li>
+<li><strong>Interpretability requirements</strong>: When stakeholders need to understand the model</li>
+<li><strong>Mixed data types</strong>: When you have both numerical and categorical features</li>
+<li><strong>Robustness to outliers</strong>: When your data contains extreme values</li>
+</ul>
+</section>
+<section id="when-to-avoid" class="level3">
+<h3 class="anchored" data-anchor-id="when-to-avoid">When to Avoid</h3>
+<ul>
+<li><strong>Linear relationships</strong>: When the true relationship is approximately linear</li>
+<li><strong>Smooth predictions needed</strong>: When you need continuous, smooth outputs</li>
+<li><strong>Small datasets</strong>: When you don’t have enough data to build reliable splits</li>
+<li><strong>High-dimensional data</strong>: When you have many features relative to observations</li>
+</ul>
+</section>
+</section>
+<section id="advanced-decision-tree-concepts" class="level2">
+<h2 class="anchored" data-anchor-id="advanced-decision-tree-concepts">Advanced Decision Tree Concepts</h2>
+<section id="tree-pruning" class="level3">
+<h3 class="anchored" data-anchor-id="tree-pruning">Tree Pruning</h3>
+<p>To prevent overfitting, trees can be pruned by removing branches that don’t significantly improve performance:</p>
+<div class="cell" data-execution_count="16">
+<div id="fig-tree-pruning" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="16">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tree-pruning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-display">
+<div id="fig-tree-pruning-1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-tree-pruning-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="decisionTrees_files/figure-html/fig-tree-pruning-output-1.png" data-ref-parent="fig-tree-pruning" width="662" height="373" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-tree-pruning-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Effect of tree depth on model complexity
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div id="fig-tree-pruning-2" class="quarto-float quarto-figure quarto-figure-center anchored" height="373" width="662">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-tree-pruning-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="decisionTrees_files/figure-html/fig-tree-pruning-output-2.png" id="fig-tree-pruning-2" data-ref-parent="fig-tree-pruning" width="662" height="373" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-tree-pruning-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b)
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div id="fig-tree-pruning-3" class="quarto-float quarto-figure quarto-figure-center anchored" height="373" width="662">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-tree-pruning-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="decisionTrees_files/figure-html/fig-tree-pruning-output-3.png" id="fig-tree-pruning-3" data-ref-parent="fig-tree-pruning" width="662" height="373" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-tree-pruning-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c)
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div id="fig-tree-pruning-4" class="quarto-float quarto-figure quarto-figure-center anchored" height="373" width="662">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-tree-pruning-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="decisionTrees_files/figure-html/fig-tree-pruning-output-4.png" id="fig-tree-pruning-4" data-ref-parent="fig-tree-pruning" width="662" height="373" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-tree-pruning-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(d)
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-tree-pruning-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13
+</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="ensemble-methods" class="level3">
+<h3 class="anchored" data-anchor-id="ensemble-methods">Ensemble Methods</h3>
+<p>Decision trees are often combined in ensembles (Random Forest, Gradient Boosting) to improve performance while maintaining interpretability.</p>
+</section>
+</section>
+<section id="conclusion-choosing-the-best-approach-for-anxiety-prediction" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion-choosing-the-best-approach-for-anxiety-prediction">Conclusion: Choosing the Best Approach for Anxiety Prediction</h2>
+<p>Our anxiety prediction journey showed us:</p>
+<section id="progressive-improvement-in-prediction-accuracy" class="level3">
+<h3 class="anchored" data-anchor-id="progressive-improvement-in-prediction-accuracy"><strong>Progressive Improvement in Prediction Accuracy:</strong></h3>
+<ol type="1">
+<li><strong>0 Variables (Baseline)</strong>: Predict everyone has mean anxiety</li>
+<li><strong>1 Variable (Time)</strong>: Significant improvement by capturing time-anxiety relationship</li>
+<li><strong>2 Variables (Linear Regression)</strong>: Further improvement but with misleading coefficients</li>
+<li><strong>2 Variables (Decision Tree)</strong>: Best accuracy with correct interpretations</li>
+</ol>
+</section>
+<section id="key-insights-for-anxiety-prediction" class="level3">
+<h3 class="anchored" data-anchor-id="key-insights-for-anxiety-prediction"><strong>Key Insights for Anxiety Prediction:</strong></h3>
+<p><strong>Decision trees offer advantages for anxiety prediction by:</strong> 1. <strong>Capturing non-linear relationships</strong> between stress surveys and anxiety 2. <strong>Providing interpretable rules</strong> that clinicians can understand 3. <strong>Handling complex interactions</strong> between time and stress naturally 4. <strong>Requiring minimal assumptions</strong> about how anxiety develops</p>
+<p><strong>However, they come with trade-offs:</strong> - <strong>Step functions</strong> instead of smooth anxiety curves - <strong>Potential overfitting</strong> without proper regularization - <strong>Instability</strong> to small data changes</p>
+</section>
+<section id="recommendation-for-anxiety-prediction" class="level3">
+<h3 class="anchored" data-anchor-id="recommendation-for-anxiety-prediction"><strong>Recommendation for Anxiety Prediction:</strong></h3>
+<p>Use decision trees when you need to capture non-linear patterns in anxiety development and value interpretability for clinical decision-making. Use linear models when relationships are approximately linear and you need smooth predictions for anxiety trajectories.</p>
+<p>The choice depends on your specific anxiety prediction needs: linear models for smooth anxiety curves, decision trees for capturing complex, non-linear anxiety patterns with interpretable rules.</p>
+<hr>
+</section>
+</section>
+<section id="appendix-toy-problem---feature-importance-calculation" class="level2">
+<h2 class="anchored" data-anchor-id="appendix-toy-problem---feature-importance-calculation">Appendix: Toy Problem - Feature Importance Calculation</h2>
+<p>Let’s work through a simple example to understand exactly how feature importance is calculated in decision trees.</p>
+<section id="the-toy-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="the-toy-dataset">The Toy Dataset</h3>
+<p>Consider a simple dataset with 8 observations:</p>
+<div id="fig-toy-dataset" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="17">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-toy-dataset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-stdout">
+<pre><code>Toy Dataset:
+========================================
+   Feature_A  Feature_B  Target
+0          1         10       5
+1          1         20      15
+2          2         10       8
+3          2         20      18
+4          3         10      12
+5          3         20      22
+6          4         10      15
+7          4         20      25
+
+Dataset shape: (8, 3)
+Target mean: 15.00
+Target variance: 45.14</code></pre>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-toy-dataset-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;14
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="building-the-toy-decision-tree" class="level3">
+<h3 class="anchored" data-anchor-id="building-the-toy-decision-tree">Building the Toy Decision Tree</h3>
+<p>Let’s create a simple decision tree and see its structure:</p>
+<div id="cell-fig-toy-tree" class="cell" data-execution_count="18">
+<div class="cell-output cell-output-display">
+<div id="fig-toy-tree" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-toy-tree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="decisionTrees_files/figure-html/fig-toy-tree-output-1.png" width="950" height="566" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-toy-tree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15: Toy decision tree structure
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Tree Structure Details:
+==============================
+Node 0: Split on Feature_B &lt;= 15.0
+  Samples: 8
+  Left child: 1
+  Right child: 4
+
+Node 1: Split on Feature_A &lt;= 2.5
+  Samples: 4
+  Left child: 2
+  Right child: 3
+
+Node 2: Leaf with value 6.50
+  Samples: 2
+
+Node 3: Leaf with value 13.50
+  Samples: 2
+
+Node 4: Split on Feature_A &lt;= 2.5
+  Samples: 4
+  Left child: 5
+  Right child: 6
+
+Node 5: Leaf with value 16.50
+  Samples: 2
+
+Node 6: Leaf with value 23.50
+  Samples: 2
+</code></pre>
+</div>
+</div>
+</section>
+<section id="step-by-step-feature-importance-calculation" class="level3">
+<h3 class="anchored" data-anchor-id="step-by-step-feature-importance-calculation">Step-by-Step Feature Importance Calculation</h3>
+<p>Now let’s manually calculate feature importance using the actual impurity reduction formula:</p>
+<div id="fig-toy-importance-calculation" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="19">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-toy-importance-calculation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-stdout">
+<pre><code>Manual Feature Importance Calculation:
+==================================================
+Node 0: Split on Feature_B &lt;= 15.0
+  Impurity reduction: 200.0000
+  Running total for Feature_B: 200.0000
+
+Node 1: Split on Feature_A &lt;= 2.5
+  Impurity reduction: 49.0000
+  Running total for Feature_A: 49.0000
+
+Node 4: Split on Feature_A &lt;= 2.5
+  Impurity reduction: 49.0000
+  Running total for Feature_A: 98.0000
+
+Final Results:
+====================
+Total impurity reduction: 298.0000
+Feature_A importance: 0.3289
+Feature_B importance: 0.6711
+Sum: 1.0000
+
+Comparison with Sklearn:
+Feature_A: Manual=0.3289, Sklearn=0.3289
+Feature_B: Manual=0.6711, Sklearn=0.6711</code></pre>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-toy-importance-calculation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;16
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="understanding-the-calculation" class="level3">
+<h3 class="anchored" data-anchor-id="understanding-the-calculation">Understanding the Calculation</h3>
+<div id="cell-fig-toy-importance-breakdown" class="cell" data-execution_count="20">
+<div class="cell-output cell-output-display">
+<div id="fig-toy-importance-breakdown" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-toy-importance-breakdown-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="decisionTrees_files/figure-html/fig-toy-importance-breakdown-output-1.png" width="1334" height="949" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-toy-importance-breakdown-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;17: Detailed breakdown of feature importance calculation
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Key Insights from Toy Example:
+===================================
+1. Feature importance is calculated by summing impurity reductions
+2. Each split contributes to the feature's total importance
+3. The reduction is weighted by the number of samples at each node
+4. Values are normalized so they sum to 1.0
+5. Features used in early splits tend to have higher importance
+6. The calculation matches sklearn's implementation exactly</code></pre>
+</div>
+</div>
+</section>
+<section id="summary-what-we-learned" class="level3">
+<h3 class="anchored" data-anchor-id="summary-what-we-learned">Summary: What We Learned</h3>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Toy Problem Key Takeaways
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Feature importance calculation process:</strong></p>
+<ol type="1">
+<li><strong>For each split</strong>: Calculate how much impurity (MSE) is reduced</li>
+<li><strong>Weight by samples</strong>: Multiply by the number of samples that go through that split</li>
+<li><strong>Sum by feature</strong>: Add up all the weighted reductions for each feature</li>
+<li><strong>Normalize</strong>: Divide by the total reduction to get proportions that sum to 1</li>
+</ol>
+<p><strong>Why this matters:</strong> - <strong>Transparency</strong>: We can see exactly how the “black box” calculation works - <strong>Interpretability</strong>: We understand why certain features are more important - <strong>Validation</strong>: We can verify that our manual calculation matches the library - <strong>Intuition</strong>: We see that features used in early splits get higher importance</p>
+<p><strong>The toy example shows:</strong> - Feature_A gets higher importance because it’s used in the root split - Feature_B gets lower importance because it’s used in a later split - The calculation is mathematically precise and reproducible</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="example-visuals-for-presentation" class="level2">
+<h2 class="anchored" data-anchor-id="example-visuals-for-presentation">Example Visuals for Presentation</h2>
+<div id="cell-fig-presentation-baseline" class="cell" data-execution_count="21">
+<div class="cell-output cell-output-display">
+<div id="fig-presentation-baseline" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-presentation-baseline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="decisionTrees_files/figure-html/fig-presentation-baseline-output-1.png" width="710" height="517" class="figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-presentation-baseline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;18: Predicting Anxiety Based on 15 Observations
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+<p><em>“The best model is not always the most complex one, but the one that best serves your analytical purpose.”</em></p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
