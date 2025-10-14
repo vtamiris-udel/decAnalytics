@@ -7,7 +7,7 @@
 | **Field** | **Details** |
 |-----------|-------------|
 | **Nickname/Pseudonym** | Ashwini |
-| **Interesting Fact** | I am a big Happry Potter fan! |
+| **Interesting Fact** | I am a big Harry Potter fan! |
 | **Interesting Fact2** | I like to ride bike and hiking🚴 |
 
 ---
