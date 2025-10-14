@@ -1,0 +1,48 @@
+name: Update Portfolio README
+
+on:
+  push:
+    paths:
+      - 'student-portfolios/**/README.md'
+  workflow_dispatch:  # Allow manual triggering
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Needed for git log commands
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Run Portfolio README Generator
+      run: |
+        cd student-portfolios
+        python generate_portfolio_readme.py
+    
+    - name: Check if README was modified
+      id: check-changes
+      run: |
+        if git diff --quiet student-portfolios/README.md; then
+          echo "changes=false" >> $GITHUB_OUTPUT
+        else
+          echo "changes=true" >> $GITHUB_OUTPUT
+        fi
+    
+    - name: Commit and push changes
+      if: steps.check-changes.outputs.changes == 'true'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add student-portfolios/README.md
+        git commit -m "🤖 Auto-update portfolio README [skip ci]"
+        git push origin HEAD:main
