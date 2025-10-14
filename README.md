@@ -1,4 +1,4 @@
-# Interpretable Data Models - BUAD 442 Fall 2025
+# Decision Analytics Fall 2025
 
 A course focused on making intelligent, explainable, and understandable decisions when using analytics and avoiding common pitfalls in data modeling.
 
@@ -22,9 +22,8 @@ This course teaches students to build bulletproof decision analytics by systemat
 - **GitHub**: Version control and project management
 - **Cursor AI**: AI-assisted coding and development
 - **Quarto**: Dynamic document creation and reporting
-- **R**: Data analysis and visualization
 - **Python**: Data analysis and visualization
-- **DOT**: Graph visualization and decision modeling
+- **DAFT/DOT**: Graph visualization and decision modeling
 
 ## Key Concepts
 

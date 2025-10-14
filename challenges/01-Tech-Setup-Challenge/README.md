@@ -1,7 +1,7 @@
 # Challenge 01: Tech Setup Challenge
 
 ## Overview
-This challenge (see techSetupChallenge.qmd) focuses on setting up essential development tools and workflows for BUAD 442. Students will learn to use modern development tools that are standard in the analytics industry, including Cursor AI, GitHub, Git version control, and Quarto for professional reporting.
+This challenge (see techSetupChallenge.qmd) focuses on setting up essential development tools and workflows for our Decision Analytics course. Students will learn to use modern development tools that are standard in the analytics industry, including Cursor AI, GitHub, Git version control, and Quarto for professional reporting.
 
 ## Learning Objectives
 - Set up Cursor AI for AI-assisted development
@@ -18,7 +18,6 @@ This challenge (see techSetupChallenge.qmd) focuses on setting up essential deve
 - **Cursor AI**: Modern AI-assisted code editor with built-in AI assistance
 - **GitHub**: Version control and collaboration platform
 - **Git**: Local version control system
-- **Quarto**: Professional document creation and reporting
 
 ## Getting Started
 1. Follow the detailed instructions in `techSetupChallenge.pdf`(or `techSetupChallenge.html` if opening from your synced repository)

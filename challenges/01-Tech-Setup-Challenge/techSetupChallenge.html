@@ -20,41 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -104,7 +69,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>🚀 Tech Setup Challenge - Quick Start Guide</h1>
 <section id="challenge-overview" class="level2">
 <h2 class="anchored" data-anchor-id="challenge-overview">Challenge Overview</h2>
-<p>This challenge will get you set up with many of the essential tools for BUAD 442. You’ll learn to use modern development tools that are standard in the analytics industry.</p>
+<p>This challenge will get you set up with many of the essential tools for our Decision Analytics course. You’ll learn to use modern development tools that are standard in the analytics industry.</p>
 </section>
 <section id="part-1-core-tools-setup" class="level2">
 <h2 class="anchored" data-anchor-id="part-1-core-tools-setup">Part 1: Core Tools Setup ⚙️</h2>
@@ -136,14 +101,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p><strong>💾 Saving Files in Cursor AI:</strong></p>
 <ul>
-<li><strong>Auto-save:</strong> Cursor AI automatically saves files as you type (you’ll see a small dot on the file tab when there are unsaved changes)</li>
-<li><strong>Manual save:</strong> Press <code>Ctrl+S</code> to save the current file</li>
-<li><strong>Save all:</strong> Press <code>Ctrl+Shift+S</code> to save all open files</li>
+<li><strong>Auto-save:</strong> Cursor AI automatically saves files to memory as you type (you’ll see a small dot on the file tab when there are unsaved changes)
+<ul>
+<li><strong>Note:</strong> Auto-save is convenient but doesn’t guarantee your work is written to disk</li>
+</ul></li>
+<li><strong>Manual save:</strong> Press <code>Ctrl+S</code> to save the current file to disk
+<ul>
+<li><strong>Important:</strong> This ensures your work is permanently stored and visible to Git</li>
+</ul></li>
+<li><strong>Save all:</strong> Press <code>Ctrl+Shift+S</code> to save all open files to disk</li>
 <li><strong>File indicators:</strong>
 <ul>
 <li>White dot on tab = unsaved changes</li>
 <li>No dot = file is saved</li>
-<li>Always save before closing files or switching tasks!</li>
+<li>Always manually save before closing files, switching tasks, or committing to Git!</li>
 </ul></li>
 </ul>
 <p><strong>AI Interaction in Cursor:</strong></p>
@@ -189,20 +160,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="get-course-materials" class="level3">
 <h3 class="anchored" data-anchor-id="get-course-materials">3. 📥 Get Course Materials</h3>
-<p><strong>Option A - Fork &amp; Clone (Recommended):</strong></p>
+<p><strong>Fork &amp; Clone:</strong></p>
 <ul>
-<li>Go to <a href="https://github.com/flyaflya/buad442Fall2025">course repo: https://github.com/flyaflya/buad442Fall2025</a> on GitHub ( ake sure you are logged in to GitHub, otherwise you won’t see the Fork button)</li>
+<li>Go to <a href="https://github.com/flyaflya/decAnalytics">course repo: https://github.com/flyaflya/decAnalytics</a> on GitHub ( make sure you are logged in to GitHub, otherwise you won’t see the Fork button)</li>
 <li>Click the <strong>“Fork”</strong> button (top right) to create your own copy
 <ul>
 <li><strong>Why?</strong> Forking creates your own copy on GitHub where you can make changes without messing up Adam’s GitHub repository</li>
 <li><strong>Why?</strong> You can’t directly edit the original course repository</li>
 </ul></li>
 <li>Now, get a copy of your GitHub repository locally so you can edit with Cursor AI. In Cursor AI, press <code>Ctrl+Shift+P</code> → “Git: Clone”</li>
-<li>Paste your forked repo URL: <code>https://github.com/YOUR_USERNAME/buad442Fall2025</code>
+<li>Paste your forked repo URL: <code>https://github.com/YOUR_USERNAME/decAnalytics</code>
 <ul>
 <li><strong>Why?</strong> This downloads your personal copy to your computer</li>
 </ul></li>
-<li>Choose where to save locally (I recommend somewhere easy to find like C:). A folder named <code>buad442Fall2025</code> will be placed in this location for you upon cloning.</li>
+<li>Choose where to save locally (I recommend somewhere easy to find like C:). A folder named <code>decAnalytics</code> will be placed in this location for you upon cloning.</li>
 </ul>
 </section>
 <section id="create-your-student-folder" class="level3">
@@ -234,35 +205,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>Press <code>Ctrl+Shift+G</code> to open Source Control</li>
 <li>Click the “+” next to your modified files to stage them</li>
-<li>Write a commit message like “Add personal info to submission.md”</li>
+<li>Write a commit message like “Add personal info to my README.md”</li>
 <li>Click “Commit” (✓ icon)</li>
 <li><strong>Why commit now?</strong> This creates a backup of your work in case something goes wrong!</li>
 </ul></li>
 </ul>
 </section>
+<section id="sync-to-github-verify-content" class="level3">
+<h3 class="anchored" data-anchor-id="sync-to-github-verify-content">4.5. 🔄 Sync to GitHub &amp; Verify Content</h3>
+<p><strong>Before submitting your pull request, let’s make sure everything is properly uploaded and visible on GitHub:</strong></p>
+<ul>
+<li><strong>💾 Save all files first:</strong> Press <code>Ctrl+Shift+S</code> to save all your work</li>
+<li><strong>Push to GitHub:</strong> In Cursor AI, click “Sync Changes” or “Push” to upload your changes
+<ul>
+<li><strong>Why?</strong> This uploads your local changes to your GitHub fork</li>
+</ul></li>
+<li><strong>Verify on GitHub:</strong> Go to your forked repository: <code>https://github.com/YOUR_USERNAME/decAnalytics</code></li>
+<li><strong>Check your student folder:</strong> Navigate to <code>student-portfolios/[YourNickNameLastInitial]/</code> on GitHub</li>
+<li><strong>Verify your content:</strong>
+<ul class="task-list">
+<li><label><input type="checkbox">Your <code>README.md</code> file is visible and contains your personal information</label></li>
+<li><label><input type="checkbox">Your photos are properly displayed in the README.md file</label></li>
+<li><label><input type="checkbox">All image files are uploaded to your student folder</label></li>
+<li><label><input type="checkbox">No broken image links or missing content</label></li>
+</ul></li>
+<li><strong>If anything is missing or incorrect:</strong>
+<ul>
+<li>Go back to Cursor AI and make the necessary changes</li>
+<li>Save, commit, and push again</li>
+<li>Refresh your GitHub page to verify the updates</li>
+</ul></li>
+<li><strong>Only proceed to the next step when everything looks correct on GitHub!</strong></li>
+</ul>
+</section>
 <section id="submit-via-pull-request" class="level3">
 <h3 class="anchored" data-anchor-id="submit-via-pull-request">5. 🔄 Submit via Pull Request</h3>
 <p><strong>What is a Pull Request?</strong> A pull request is like asking “Hey, can you add my changes to your project?” It’s how you submit your work for review and inclusion in the main course repository. Think of it as a digital way to turn in your homework!</p>
-<p><strong>In Cursor AI:</strong></p>
+<p><strong>Since you already synced your changes to GitHub in step 4.5, you can now create your pull request directly:</strong></p>
 <ul>
-<li><strong>💾 Save all files first:</strong> Press <code>Ctrl+Shift+S</code> to save all your work</li>
-<li>Stage your changes: <code>Ctrl+Shift+G</code> → click “+” next to your new folder
-<ul>
-<li><strong>Why?</strong> This tells Git which files you want to include in your submission</li>
-</ul></li>
-<li>Commit: Write message like “Add student submission for [YourName]”
-<ul>
-<li><strong>Why?</strong> This creates a permanent record of your changes with a description</li>
-</ul></li>
-<li>Push: Click “Sync Changes” or “Publish Branch”
-<ul>
-<li><strong>Why?</strong> This uploads your changes to your GitHub fork</li>
-</ul></li>
 <li>Go to your forked repo on GitHub to create the pull request</li>
 </ul>
 <p><strong>Create Pull Request:</strong></p>
 <ul>
-<li>Go to your forked repo: <code>https://github.com/YOUR_USERNAME/buad442Fall2025</code></li>
+<li>Go to your forked repo: <code>https://github.com/YOUR_USERNAME/decAnalytics</code></li>
 <li>You should see a banner saying “This branch is X commits ahead of flyaflya:main”
 <ul>
 <li><strong>Why?</strong> This shows your fork has changes that aren’t in the original course repo</li>
@@ -282,134 +267,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 </section>
 </section>
-<section id="part-2-quarto-setup" class="level2">
-<h2 class="anchored" data-anchor-id="part-2-quarto-setup">Part 2: Quarto Setup 📊</h2>
-<section id="why-quarto" class="level3">
-<h3 class="anchored" data-anchor-id="why-quarto">Why Quarto?</h3>
-<p>Quarto is essential for creating <strong>professional reports</strong> that combine:</p>
-<ul>
-<li><strong>Text</strong> (like this document)</li>
-<li><strong>Code</strong> (Python/R analysis)</li>
-<li><strong>Visualizations</strong> (charts, graphs)</li>
-<li><strong>Interactive elements</strong> (dashboards)</li>
-</ul>
-<p>It’s not just for code - it’s for creating beautiful, reproducible documents that are perfect for business presentations and reports.</p>
-</section>
-<section id="install-quarto" class="level3">
-<h3 class="anchored" data-anchor-id="install-quarto">6. 📚 Install Quarto</h3>
-<ul>
-<li><p>Go to <a href="https://quarto.org/docs/get-started/">quarto.org/docs/get-started/</a></p></li>
-<li><p>Download and install Quarto for your operating system</p></li>
-<li><p>Verify installation: Open terminal/command prompt and type <code>quarto --version</code></p></li>
-<li><p><strong>💡 Recommended:</strong> Install the Quarto extension in Cursor AI for better editing experience:</p>
-<ul>
-<li>Press <code>Ctrl+Shift+X</code> to open Extensions</li>
-<li>Search for “Quarto”</li>
-<li>Install the “Quarto” extension by Quarto</li>
-<li><strong>Why?</strong> This gives you syntax highlighting, live preview, and better editing support for <code>.qmd</code> files</li>
-</ul></li>
-</ul>
-</section>
-<section id="test-quarto" class="level3">
-<h3 class="anchored" data-anchor-id="test-quarto">7. Test Quarto</h3>
-<p>Create a simple test document:</p>
-<ol type="1">
-<li><p>Create a new file in your student submission folder called <code>test.qmd</code></p></li>
-<li><p>Add this content (replace bracketed text with your nickname):</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "My First Quarto Document"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="an">format:</span><span class="co"> html</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu"># Hello World! 👋</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>This is my first Quarto document. My nick name is <span class="co">[</span><span class="ot">YourNickNameLastInitial</span><span class="co">]</span>.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
-<li><p><strong>💾 Save the file:</strong> Press <code>Ctrl+S</code> to save your new <code>test.qmd</code> file</p></li>
-<li><p><strong>🤖 Experience Cursor AI Magic:</strong> Let’s add some content about your interests using Cursor’s AI assistant:</p>
-<ul>
-<li><strong>Open the AI Chat:</strong> Press <code>Ctrl+L</code> to open Cursor’s AI chat panel (or click the chat icon in the sidebar)</li>
-<li><strong>Ask Cursor to add content:</strong> Type something like: “Add a paragraph about my interest in [your hobby/sport/music/etc] to this document”</li>
-<li><strong>Example prompts you can try:</strong>
-<ul>
-<li>“Add a paragraph about my love for basketball and how I play point guard”</li>
-<li>“Add a section about my passion for photography and the types of photos I like to take”</li>
-<li>“Add content about my interest in cooking and my favorite recipes”</li>
-</ul></li>
-<li><strong>Cursor will add the content directly to your file!</strong> You can edit it if needed</li>
-<li><strong>💡 Pro Tip:</strong> This demonstrates how Cursor AI can quickly generate content and help you write faster!</li>
-</ul></li>
-<li><p><strong>🔄 Quick commit:</strong> After adding content with AI, commit your enhanced file:</p>
-<ul>
-<li>Press <code>Ctrl+Shift+G</code> → click “+” next to <code>test.qmd</code></li>
-<li>Write commit message: “Add test Quarto document with AI-generated content”</li>
-<li>Click “Commit” (✓ icon)</li>
-</ul></li>
-<li><p>Render it using the terminal/command prompt: <strong>Opening Terminal in Cursor AI:</strong></p>
-<ul>
-<li>Press `Ctrl + `` (backtick key, usually under the Esc key) to open the integrated terminal</li>
-<li>OR go to the top menu: <strong>Terminal</strong> → <strong>New Terminal</strong></li>
-<li>OR press <code>Ctrl+Shift+P</code> → type “Terminal: Create New Terminal” → press Enter</li>
-</ul>
-<p><strong>Navigating to Your File:</strong></p>
-<ul>
-<li>The terminal opens in your project root folder, but you need to be in your student folder</li>
-<li>Navigate to your student folder: <code>cd "C:\buad442Fall2025\challenges\01-Tech-Setup-Challenge\student-submissions\YourNickNameLastInitial"</code></li>
-<li>Replace <code>YourNickNameLastInitial</code> with your actual folder name</li>
-<li><strong>💡 Pro Tip:</strong> Press the <code>Tab</code> key while typing to auto-complete folder names! This saves time and prevents typos.</li>
-</ul>
-<p><strong>Alternative (if you installed the Quarto extension):</strong></p>
-<ul>
-<li>Open your <code>test.qmd</code> file in Cursor AI</li>
-<li>Look for the <strong>“Preview”</strong> button in the top-right corner of the editor</li>
-<li>Click it to render and view your document without using the terminal!</li>
-</ul>
-<p><strong>Running the Render Command:</strong></p>
-<ul>
-<li>Type: <code>quarto render test.qmd</code> and press Enter</li>
-<li>You should see output indicating the file was rendered successfully</li>
-<li>This will create a <code>test.html</code> file in the same folder</li>
-<li><strong>💾 Commit the generated HTML:</strong> After successful rendering, commit the new <code>test.html</code> file:
-<ul>
-<li>Press <code>Ctrl+Shift+G</code> → click “+” next to <code>test.html</code></li>
-<li>Write commit message: “Add rendered Quarto HTML output”</li>
-<li>Click “Commit” (✓ icon)</li>
-</ul></li>
-</ul>
-<p><strong>Alternative Method (if terminal seems complicated):</strong></p>
-<ul>
-<li>Right-click on <code>test.qmd</code> in the file explorer</li>
-<li>Look for “Open in Terminal” or “Open in Command Prompt” option</li>
-<li>Then type: <code>quarto render test.qmd</code></li>
-</ul></li>
-<li><p>Open the generated <code>test.html</code> file</p></li>
-<li><p><strong>🔄 Final commit before submission:</strong></p>
-<ul>
-<li>Press <code>Ctrl+Shift+S</code> to save all files</li>
-<li>Press <code>Ctrl+Shift+G</code> → stage any remaining changes</li>
-<li>Write commit message: “Complete Quarto setup and testing”</li>
-<li>Click “Commit” (✓ icon)</li>
-<li><strong>Why?</strong> This ensures all your work is safely backed up before the final submission!</li>
-</ul></li>
-</ol>
-</section>
-<section id="update-your-pull-request" class="level3">
-<h3 class="anchored" data-anchor-id="update-your-pull-request">8. 🔄 Update Your Pull Request</h3>
-<p><strong>Your pull request will update with new commits!</strong> Here’s how:</p>
-<ul>
-<li><strong>Push your new commits:</strong> In Cursor AI, click “Sync Changes” or “Push” to upload your Quarto work</li>
-<li><strong>Check your pull request:</strong> Go back to your GitHub pull request page</li>
-<li><strong>You’ll see:</strong> The pull request now includes both your initial submission AND your Quarto testing</li>
-<li><strong>The pull request updates automatically</strong> because it’s tracking your branch, not specific commits</li>
-</ul>
-<p><strong>What you should see:</strong></p>
-<ul>
-<li>Your original pull request now shows all your commits in the “Commits” tab</li>
-<li>The “Files changed” tab will show both your <code>submission.md</code> and <code>test.qmd</code>/<code>test.html</code> files</li>
-<li>Everything is in one place for easy review</li>
-</ul>
-<p><strong>💡 Pro Tip:</strong> This is how real development works - you keep adding commits to your branch, and the pull request shows all changes on that branch!</p>
-</section>
-</section>
 <section id="congratulations-youre-done" class="level2">
 <h2 class="anchored" data-anchor-id="congratulations-youre-done">Congratulations! You’re Done! ✅</h2>
 <p>You’ve completed the tech setup challenge! Check the checklist below to make sure you’ve completed all the steps.</p>
@@ -418,19 +275,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="submission-checklist">📋 Submission Checklist</h2>
 <ul class="task-list">
 <li><label><input type="checkbox">Cursor AI installed and configured</label></li>
+<li><label><input type="checkbox">Git set up in Cursor AI (Source Control)</label></li>
 <li><label><input type="checkbox">GitHub account created</label></li>
 <li><label><input type="checkbox">Course materials forked and cloned</label></li>
-<li><label><input type="checkbox">Student folder created with submission.md</label></li>
-<li><label><input type="checkbox">Personal info added to submission.md</label></li>
-<li><label><input type="checkbox">Initial commit made for submission.md</label></li>
+<li><label><input type="checkbox">Student folder created with README.md</label></li>
+<li><label><input type="checkbox">Personal info and photos added to README.md</label></li>
+<li><label><input type="checkbox">Initial commit made for README.md</label></li>
 <li><label><input type="checkbox">Pull request created for initial submission</label></li>
-<li><label><input type="checkbox">Quarto installed and verified</label></li>
-<li><label><input type="checkbox">Test Quarto document (test.qmd) created</label></li>
-<li><label><input type="checkbox">AI-generated content added to test document using Cursor AI</label></li>
-<li><label><input type="checkbox">Quarto document rendered to HTML</label></li>
-<li><label><input type="checkbox">All Quarto files committed</label></li>
-<li><label><input type="checkbox">Pull request updated with Quarto work</label></li>
-<li><label><input type="checkbox">All work pushed to GitHub</label></li>
 </ul>
 </section>
 <section id="quick-git-basics" class="level2">
@@ -448,7 +299,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="need-help">🆘 Need Help?</h2>
 <ul>
 <li>GitHub tutorials: <a href="https://guides.github.com">guides.github.com</a></li>
-<li>Quarto docs: <a href="https://quarto.org/docs">quarto.org/docs</a></li>
 <li>Cursor AI has built-in help and AI assistance. Note cursor is built on VS Code, so google searches using VS Code in place of Cursor will often lead to helpful solutions. Search “VS Code [your question]”</li>
 <li>Ask questions in class or office hours!</li>
 </ul>
@@ -462,14 +312,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><strong>GitHub</strong> = Industry standard for collaboration</li>
 <li><strong>Cursor AI</strong> = Modern AI-assisted development</li>
-<li><strong>Quarto</strong> = Professional reporting and documentation</li>
 <li><strong>Git</strong> = Version control (essential for any coding project)</li>
 </ul>
 </section>
 <section id="for-this-course" class="level3">
 <h3 class="anchored" data-anchor-id="for-this-course">For This Course:</h3>
 <ul>
-<li><strong>Challenges</strong> will require Quarto reports</li>
+<li><strong>Challenges</strong> will require Quarto reports (not required for this challenge)</li>
 <li><strong>Portfolio</strong> will be built on GitHub</li>
 <li><strong>Collaboration</strong> will happen through GitHub</li>
 </ul>
@@ -482,7 +331,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Why you need this:</strong> When I add new course materials, challenges, or updates, your fork won’t automatically get them. You’ll need to sync manually.</p>
 <p><strong>Easy Method (GitHub Web Interface):</strong></p>
 <ol type="1">
-<li>Go to your forked repo: <code>https://github.com/YOUR_USERNAME/buad442Fall2025</code></li>
+<li>Go to your forked repo: <code>https://github.com/YOUR_USERNAME/decAnalytics</code></li>
 <li>Look for a <strong>“Sync fork”</strong> banner at the top (appears when there are updates)</li>
 <li>Click <strong>“Update branch”</strong> to pull in the latest changes</li>
 <li>In Cursor AI: <code>Ctrl+Shift+P</code> → “Git: Pull” to download changes to your computer</li>

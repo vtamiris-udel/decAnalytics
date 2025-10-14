@@ -13,7 +13,7 @@ execute:
 
 ## Challenge Overview
 
-This challenge will get you set up with many of the essential tools for BUAD 442. You'll learn to use modern development tools that are standard in the analytics industry.
+This challenge will get you set up with many of the essential tools for our Decision Analytics course. You'll learn to use modern development tools that are standard in the analytics industry.
 
 ## Part 1: Core Tools Setup ⚙️
 
@@ -79,16 +79,16 @@ This challenge will get you set up with many of the essential tools for BUAD 442
 
 ### 3. 📥 Get Course Materials
 
-**Option A - Fork & Clone (Recommended):**
+**Fork & Clone:**
 
-- Go to [course repo: https://github.com/flyaflya/buad442Fall2025](https://github.com/flyaflya/buad442Fall2025) on GitHub ( make sure you are logged in to GitHub, otherwise you won't see the Fork button)
+- Go to [course repo: https://github.com/flyaflya/decAnalytics](https://github.com/flyaflya/decAnalytics) on GitHub ( make sure you are logged in to GitHub, otherwise you won't see the Fork button)
 - Click the **"Fork"** button (top right) to create your own copy
   - **Why?** Forking creates your own copy on GitHub where you can make changes without messing up Adam's GitHub repository
   - **Why?** You can't directly edit the original course repository
 - Now, get a copy of your GitHub repository locally so you can edit with Cursor AI. In Cursor AI, press `Ctrl+Shift+P` → "Git: Clone"
-- Paste your forked repo URL: `https://github.com/YOUR_USERNAME/buad442Fall2025`
+- Paste your forked repo URL: `https://github.com/YOUR_USERNAME/decAnalytics`
   - **Why?** This downloads your personal copy to your computer
-- Choose where to save locally (I recommend somewhere easy to find like C:\).  A folder named `buad442Fall2025` will be placed in this location for you upon cloning.
+- Choose where to save locally (I recommend somewhere easy to find like C:\).  A folder named `decAnalytics` will be placed in this location for you upon cloning.
 
 ### 4. 👤 Create Your Student Folder
 
@@ -123,7 +123,7 @@ This challenge will get you set up with many of the essential tools for BUAD 442
 - **💾 Save all files first:** Press `Ctrl+Shift+S` to save all your work
 - **Push to GitHub:** In Cursor AI, click "Sync Changes" or "Push" to upload your changes
   - **Why?** This uploads your local changes to your GitHub fork
-- **Verify on GitHub:** Go to your forked repository: `https://github.com/YOUR_USERNAME/buad442Fall2025`
+- **Verify on GitHub:** Go to your forked repository: `https://github.com/YOUR_USERNAME/decAnalytics`
 - **Check your student folder:** Navigate to `student-portfolios/[YourNickNameLastInitial]/` on GitHub
 - **Verify your content:**
   - [ ] Your `README.md` file is visible and contains your personal information
@@ -147,7 +147,7 @@ A pull request is like asking "Hey, can you add my changes to your project?" It'
 
 **Create Pull Request:**
 
-- Go to your forked repo: `https://github.com/YOUR_USERNAME/buad442Fall2025`
+- Go to your forked repo: `https://github.com/YOUR_USERNAME/decAnalytics`
 - You should see a banner saying "This branch is X commits ahead of flyaflya:main"
   - **Why?** This shows your fork has changes that aren't in the original course repo
 - Click **"Compare & pull request"**
@@ -156,124 +156,6 @@ A pull request is like asking "Hey, can you add my changes to your project?" It'
   - **Why?** This helps identify your submission and explains what you did
 - Click **"Create pull request"**
   - **Why?** This submits your work for review and inclusion in the course materials
-
-## Part 2: Quarto Setup 📊
-
-### Why Quarto?
-
-Quarto is essential for creating **professional reports** that combine:
-
-- **Text** (like this document)
-- **Code** (Python/R analysis)
-- **Visualizations** (charts, graphs)
-- **Interactive elements** (dashboards)
-
-It's not just for code - it's for creating beautiful, reproducible documents that are perfect for business presentations and reports.
-
-### 6. 📚 Install Quarto
-
-- Go to [quarto.org/docs/get-started/](https://quarto.org/docs/get-started/)
-- Download and install Quarto for your operating system
-- Verify installation: Open terminal/command prompt and type `quarto --version`
-
-- **💡 Recommended:** Install the Quarto extension in Cursor AI for better editing experience:
-  - Press `Ctrl+Shift+X` to open Extensions (from with Cursor AI)
-  - Search for "Quarto"
-  - Install the "Quarto" extension by Quarto
-  - **Why?** This gives you syntax highlighting, live preview, and better editing support for `.qmd` files
-
-### 7.  Test Quarto
-
-Create a simple test document:
-
-1. Create a new file in your student portfolios folder called `test.qmd`
-2. Add this content (replace bracketed text with your nickname):
-   ```markdown
-   ---
-   title: "My First Quarto Document"
-   format: html
-   ---
-   
-   # Hello World! 👋
-   
-   This is my first Quarto document. My nick name is [YourNickNameLastInitial].
-   ```
-3. **💾 Save the file:** Press `Ctrl+S` to save your new `test.qmd` file
-
-4. **🤖 Experience Cursor AI Magic:** Let's add some content about your interests using Cursor's AI assistant:
-   - **Open the AI Chat:** Press `Ctrl+L` to open Cursor's AI chat panel (or click the chat icon in the sidebar)
-   - **Ensure correct context:** Make sure your `test.qmd` file is open and active in the editor (click on it if needed)
-     - **Why?** This ensures Cursor AI has the correct file context for the conversation
-   - **Check the mode:** In the chat panel, make sure the dropdown shows "Ask" (not "Agent")
-     - **Why?** "Ask" mode is perfect for quick content additions to your current file
-   - **Ask Cursor to add content:** Type something like: "Add a paragraph about my interest in [your hobby/sport/music/etc] to this document"
-   - **Example prompts you can try:**
-     - "Add a paragraph about my love for basketball and how I play point guard"
-     - "Add a section about my passion for photography and the types of photos I like to take"
-     - "Add content about my interest in cooking and my favorite recipes"
-   - **Cursor will add the content directly to your file!** You can edit it if needed
-   - **💡 Pro Tip:** This demonstrates how Cursor AI can quickly generate content and help you write faster!
-
-5. **🔄 Quick commit:** After adding content with AI, commit your enhanced file:
-   - Press `Ctrl+Shift+G` → click "+" next to `test.qmd`
-   - Write commit message: "Add test Quarto document with AI-generated content"
-   - Click "Commit" (✓ icon)
-
-6. Render it using the terminal/command prompt:
-   **Opening Terminal in Cursor AI:**
-   - Press `Ctrl + `` (backtick key, usually under the Esc key) to open the integrated terminal
-   - OR go to the top menu: **Terminal** → **New Terminal**
-   - OR press `Ctrl+Shift+P` → type "Terminal: Create New Terminal" → press Enter
-   
-   **Navigating to Your File:**
-   - The terminal opens in your project root folder, but you need to be in your student folder
-   - Navigate to your student folder: `cd "C:\buad442Fall2025\challenges\01-Tech-Setup-Challenge\student-submissions\YourNickNameLastInitial"`
-   - Replace `YourNickNameLastInitial` with your actual folder name
-   - **💡 Pro Tip:** Press the `Tab` key while typing to auto-complete folder names! This saves time and prevents typos.
-   
-   **Alternative (if you installed the Quarto extension):**
-   - Open your `test.qmd` file in Cursor AI
-   - Look for the **"Preview"** button in the top-right corner of the editor
-   - Click it to render and view your document without using the terminal!
-   
-   **Running the Render Command:**
-   - Type: From the directory with `test.qmd`, use the terminal to type `quarto render test.qmd` and press Enter
-   - You should see output indicating the file was rendered successfully
-   - This will create a `test.html` file in the same folder
-   - **💾 Commit the generated HTML:** After successful rendering, commit the new `test.html` file:
-     - Press `Ctrl+Shift+G` → click "+" next to `test.html`
-     - Write commit message: "Add rendered Quarto HTML output"
-     - Click "Commit" (✓ icon)
-   
-   **Alternative Method (if terminal seems complicated):**
-   - Right-click on `test.qmd` in the file explorer
-   - Look for "Open in Terminal" or "Open in Command Prompt" option
-   - Then type: `quarto render test.qmd`
-7. Open the generated `test.html` file
-8. **🔄 Final commit before submission:** 
-
-   - Press `Ctrl+Shift+S` to save all files
-   - Press `Ctrl+Shift+G` → stage any remaining changes
-   - Write commit message: "Complete Quarto setup and testing"
-   - Click "Commit" (✓ icon)
-   - **Why?** This ensures all your work is safely backed up before the final submission!
-
-### 8. 🔄 Update Your Pull Request
-
-**Your pull request will update with new commits!** Here's how:
-
-- **Push your new commits:** In Cursor AI, click "Sync Changes" or "Push" to upload your Quarto work
-- **Check your pull request:** Go back to your GitHub pull request page
-- **You'll see:** The pull request now includes both your initial submission AND your Quarto testing
-- **The pull request updates automatically** because it's tracking your branch, not specific commits
-
-**What you should see:**
-
-- Your original pull request now shows all your commits in the "Commits" tab
-- The "Files changed" tab will show both your `submission.md` and `test.qmd`/`test.html` files
-- Everything is in one place for easy review
-
-**💡 Pro Tip:** This is how real development works - you keep adding commits to your branch, and the pull request shows all changes on that branch!
 
 ## Congratulations! You're Done! ✅
 
@@ -288,14 +170,6 @@ You've completed the tech setup challenge! Check the checklist below to make sur
 - [ ] Personal info and photos added to README.md
 - [ ] Initial commit made for README.md
 - [ ] Pull request created for initial submission
-- [ ] Quarto installed and verified
-- [ ] Quarto extension installed in Cursor AI (recommended)
-- [ ] Test Quarto document (test.qmd) created
-- [ ] AI-generated content added to test document using Cursor AI
-- [ ] Quarto document rendered to HTML
-- [ ] All Quarto files committed
-- [ ] Pull request updated with Quarto work
-- [ ] All work pushed to GitHub
 
 ##  Quick Git Basics
 
@@ -310,7 +184,6 @@ You've completed the tech setup challenge! Check the checklist below to make sur
 ## 🆘 Need Help?
 
 - GitHub tutorials: [guides.github.com](https://guides.github.com)
-- Quarto docs: [quarto.org/docs](https://quarto.org/docs)
 - Cursor AI has built-in help and AI assistance.  Note cursor is built on VS Code, so google searches using VS Code in place of Cursor will often lead to helpful solutions.  Search "VS Code [your question]"
 - Ask questions in class or office hours!
 
@@ -324,12 +197,11 @@ You've completed the tech setup challenge! Check the checklist below to make sur
 
 - **GitHub** = Industry standard for collaboration
 - **Cursor AI** = Modern AI-assisted development
-- **Quarto** = Professional reporting and documentation
 - **Git** = Version control (essential for any coding project)
 
 ### For This Course:
 
-- **Challenges** will require Quarto reports
+- **Challenges** will require Quarto reports (not required for this challenge)
 - **Portfolio** will be built on GitHub
 - **Collaboration** will happen through GitHub
 
@@ -343,7 +215,7 @@ You're learning leading tools that are used by data scientists, analysts, and de
 
 **Easy Method (GitHub Web Interface):**
 
-1. Go to your forked repo: `https://github.com/YOUR_USERNAME/buad442Fall2025`
+1. Go to your forked repo: `https://github.com/YOUR_USERNAME/decAnalytics`
 2. Look for a **"Sync fork"** banner at the top (appears when there are updates)
 3. Click **"Update branch"** to pull in the latest changes
 4. In Cursor AI: `Ctrl+Shift+P` → "Git: Pull" to download changes to your computer
