@@ -14,6 +14,7 @@ This README is automatically generated and updated when changes are made to stud
 | Chandra | Chandra | Data enthusiast, hobbyist artist and singer.<br>N/A | [View Portfolio](Chandra/README.md) | N/A | <img src="Chandra/IMG_7975.JPG" alt="Chandra with family in Aruba" title="Chandra with family in Aruba" width="150"> |
 | JayaPrakash | JP | N/A<br>N/A | [View Portfolio](JayaPrakash/README.md) | N/A | <img src="JayaPrakash/JP_Personal_Photo.jpg" alt="JP - With family" title="JP - With family" width="150"> |
 | LukeB | Luke | I have a 3yo Sheepadoodle named Benny.<br>I like playing badminton in my free time. | [View Portfolio](LukeB/README.md) | N/A | <img src="LukeB/PXL_20240522_154604796.PORTRAIT.ORIGINAL~3.jpg" alt="Benny in the flowers" title="Benny in the flowers" width="150"><img src="LukeB/IMG_0878.jpg" alt="Me playing badminton" title="Me playing badminton" width="150"> |
+| Mike.Abbo | Your Nickname | An interesting fact about you<br>Another interesting fact about you | [View Portfolio](Mike.Abbo/README.md) | N/A | <img src="Mike.Abbo/Contessa.jpg" alt="Description" title="Description" width="150"> |
 | MukeshM | N/A | N/A<br>N/A | [View Portfolio](MukeshM/README.md) | N/A | No images |
 | RaheelU | Raheel | Enjoy traveling and hiking<br>Philadelphia sports fan - Go Birds!! | [View Portfolio](RaheelU/README.md) | N/A | <img src="RaheelU/Indonesia_waterfall.jpg" alt="Waterfall hike in Indonesia" title="Waterfall hike in Indonesia" width="150"> |
 | RaviM | Ravi | Enjoy coding<br>Watching movies | [View Portfolio](RaviM/README.md) | N/A | No images |
@@ -59,4 +60,4 @@ This README is automatically generated and updated when changes are made to stud
 This README is automatically updated via GitHub Actions whenever any `README.md` file in the student-portfolios folder (or its subfolders) is modified.
 
 ---
-*Last updated: %Y->- (HEAD -> main, origin/main) 0b6455a54bfbf11684c79814a4fccb0bd18a3d24:%M:HEAD*
+*Last updated: %Y->- (HEAD -> main, origin/main) f6c7b14c4c06fc9aa9438c98379ff4348619f5db:%M:HEAD*
