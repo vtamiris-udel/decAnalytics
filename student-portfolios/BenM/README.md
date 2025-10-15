@@ -1,4 +1,4 @@
-# 👨‍🎓 Student Portfolio - Ben M. 
+# 👨‍🎓 Student Portfolio - Adam F. 🚴
 
 ---
 
@@ -7,14 +7,14 @@
 | **Field** | **Details** |
 |-----------|-------------|
 | **Nickname/Pseudonym** | Ben |
-| **Interesting Fact** | I met the Pope |
-| **Interesting Fact2** | I completed an IronMan race |
+| **Interesting Fact** | I met the Pope|
+| **Interesting Fact2** | I completed an IronMan Race|
 
 ---
 
+## 🖼️ Portfolio Images
 
-### Primary Photo
-
-![Ben M. - Portfolio Photo](./CAD640E2-1C12-4A73-9CBE-5105EE7AAA20.jpeg)
+### Headshot
+![Ben's photo](CAD640E2-1C12-4A73-9CBE-5105EE7AAA20.jpeg)
 
 
