@@ -12,6 +12,7 @@ This README is automatically generated and updated when changes are made to stud
 | AshwiniP | Ashwini | I am a big Harry Potter fan!<br>I like to ride bike and hiking🚴 | [View Portfolio](AshwiniP/README.md) | N/A | <img src="AshwiniP/IMG_0357.png" alt="Ashwini in Ediburgh , Scotland posing in front of the cafe where J K Rowling got her inspiration for Harry Potter" title="Ashwini in Ediburgh , Scotland posing in front of the cafe where J K Rowling got her inspiration for Harry Potter" width="150"> |
 | Ayesha | Ayesha | Interested in listening to music during long drive...<br>N/A | [View Portfolio](Ayesha/README.md) | N/A | <img src="Ayesha/IMG_5653.jpg" alt="Ayesha  - With family" title="Ayesha  - With family" width="150"> |
 | Chandra | Chandra | Data enthusiast, hobbyist artist and singer.<br>N/A | [View Portfolio](Chandra/README.md) | N/A | <img src="Chandra/IMG_7975.JPG" alt="Chandra with family in Aruba" title="Chandra with family in Aruba" width="150"> |
+| GiteshK | Gitesh | My two passions are road trips and photography.<br>N/A | [View Portfolio](GiteshK/README.md) | N/A | <img src="GiteshK/Family.jpeg" alt="Gitesh - With family on vacation, Pune India" title="Gitesh - With family on vacation, Pune India" width="150"> |
 | JayaPrakash | JP | N/A<br>N/A | [View Portfolio](JayaPrakash/README.md) | N/A | <img src="JayaPrakash/JP_Personal_Photo.jpg" alt="JP - With family" title="JP - With family" width="150"> |
 | LukeB | Luke | I have a 3yo Sheepadoodle named Benny.<br>I like playing badminton in my free time. | [View Portfolio](LukeB/README.md) | N/A | <img src="LukeB/PXL_20240522_154604796.PORTRAIT.ORIGINAL~3.jpg" alt="Benny in the flowers" title="Benny in the flowers" width="150"><img src="LukeB/IMG_0878.jpg" alt="Me playing badminton" title="Me playing badminton" width="150"> |
 | Mike.Abbo | Your Nickname | An interesting fact about you<br>Another interesting fact about you | [View Portfolio](Mike.Abbo/README.md) | N/A | <img src="Mike.Abbo/Contessa.jpg" alt="Description" title="Description" width="150"> |
@@ -61,4 +62,4 @@ This README is automatically generated and updated when changes are made to stud
 This README is automatically updated via GitHub Actions whenever any `README.md` file in the student-portfolios folder (or its subfolders) is modified.
 
 ---
-*Last updated: %Y->- (HEAD -> main, origin/main) 0077fea48d19fdad730a632b47dd6e519777a058:%M:HEAD*
+*Last updated: %Y->- (HEAD -> main, origin/main) 3b6851ae204e010398e7a7d66961f288d32a3e31:%M:HEAD*
