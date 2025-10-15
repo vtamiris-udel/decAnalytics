@@ -1,4 +1,4 @@
-# 👨‍🎓 Student Portfolio - Rohit T. 🚴
+# 👨‍🎓 Student Portfolio - Rohit T.
 
 ---
 
@@ -16,6 +16,6 @@
 
 
 ### Personal Photo
-![Holiday Photo](student-portfolios\RohitT\Holiday Photo.jpg)
+![Holiday Photo](./holiday_photo.jpg)
 
 
