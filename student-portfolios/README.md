@@ -19,6 +19,7 @@ This README is automatically generated and updated when changes are made to stud
 | Mike.Abbo | Your Nickname | An interesting fact about you<br>Another interesting fact about you | [View Portfolio](Mike.Abbo/README.md) | N/A | <img src="Mike.Abbo/Contessa.jpg" alt="Description" title="Description" width="150"> |
 | MukeshM | N/A | N/A<br>N/A | [View Portfolio](MukeshM/README.md) | N/A | No images |
 | RaheelU | Raheel | Enjoy traveling and hiking<br>Philadelphia sports fan - Go Birds!! | [View Portfolio](RaheelU/README.md) | N/A | <img src="RaheelU/Indonesia_waterfall.jpg" alt="Waterfall hike in Indonesia" title="Waterfall hike in Indonesia" width="150"> |
+| RameshG | Ramesh | Love Gardening<br>Like to Travel and hike | [View Portfolio](RameshG/README.md) | N/A | <img src="RameshG/RameshG_Hershey.jpeg" alt="Hershey" title="Hershey" width="150"> |
 | RaviM | Ravi | Enjoy coding<br>Watching movies | [View Portfolio](RaviM/README.md) | N/A | No images |
 | RohitT | RohitT | I value time with family, especially my daughter<br>I believe small improvements every day make a big ... | [View Portfolio](RohitT/README.md) | N/A | <img src="RohitT/./holiday_photo.jpg" alt="Holiday Photo" title="Holiday Photo" width="150"> |
 | SidJena | Sid | My favorite band growing up was The Backstreet Boy...<br>I play a lot of sports. | [View Portfolio](SidJena/README.md) | N/A | <img src="SidJena/MyTeam.jpeg" alt="MySportTeam" title="MySportTeam" width="150"> |
@@ -63,4 +64,4 @@ This README is automatically generated and updated when changes are made to stud
 This README is automatically updated via GitHub Actions whenever any `README.md` file in the student-portfolios folder (or its subfolders) is modified.
 
 ---
-*Last updated: %Y->- (HEAD -> main, origin/main) 00f88f51fc6503eb6a7efa8bb121951c69900420:%M:HEAD*
+*Last updated: %Y->- (HEAD -> main, origin/main) 87ffec37b05619b1044fbec2a16162cff58ec954:%M:HEAD*
