@@ -16,6 +16,6 @@
 
 
 ### Personal Photo
-![Ayesha  - With family ](IMG_5653.png)
+![Ayesha  - With family ](IMG_5653.jpg)
 
 
