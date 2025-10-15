@@ -11,6 +11,7 @@ This README is automatically generated and updated when changes are made to stud
 | AdamF | Adam | Inventor of "The Invisible Pool Toy" - I hold a pa...<br>I like biking in cities and on gravel rail trails.... | [View Portfolio](AdamF/README.md) | N/A | <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpU-_uS7d7czuDb5wBpTui3ahBAFzJAIMpJA&s" alt="The Invisible Pool Toy" title="The Invisible Pool Toy" width="150" style="max-height: 85px; object-fit: contain; margin: 2px;"><img src="AdamF/IMG_1783.png" alt="Adam - With family on the Rehoboth-Lewes Beach Bike Trail" title="Adam - With family on the Rehoboth-Lewes Beach Bike Trail" width="150"> |
 | AshwiniP | Ashwini | I am a big Harry Potter fan!<br>I like to ride bike and hiking🚴 | [View Portfolio](AshwiniP/README.md) | N/A | <img src="AshwiniP/IMG_0357.png" alt="Ashwini in Ediburgh , Scotland posing in front of the cafe where J K Rowling got her inspiration for Harry Potter" title="Ashwini in Ediburgh , Scotland posing in front of the cafe where J K Rowling got her inspiration for Harry Potter" width="150"> |
 | Ayesha | Ayesha | Interested in listening to music during long drive...<br>N/A | [View Portfolio](Ayesha/README.md) | N/A | <img src="Ayesha/IMG_5653.jpg" alt="Ayesha  - With family" title="Ayesha  - With family" width="150"> |
+| Chandra | Chandra | Data enthusiast, hobbyist artist and singer.<br>N/A | [View Portfolio](Chandra/README.md) | N/A | <img src="Chandra/IMG_7975.JPG" alt="Chandra with family in Aruba" title="Chandra with family in Aruba" width="150"> |
 | LukeB | Luke | I have a 3yo Sheepadoodle named Benny.<br>I like playing badminton in my free time. | [View Portfolio](LukeB/README.md) | N/A | <img src="LukeB/PXL_20240522_154604796.PORTRAIT.ORIGINAL~3.jpg" alt="Benny in the flowers" title="Benny in the flowers" width="150"><img src="LukeB/IMG_0878.jpg" alt="Me playing badminton" title="Me playing badminton" width="150"> |
 | RaheelU | Raheel | Enjoy traveling and hiking<br>Philadelphia sports fan - Go Birds!! | [View Portfolio](RaheelU/README.md) | N/A | <img src="RaheelU/Indonesia_waterfall.jpg" alt="Waterfall hike in Indonesia" title="Waterfall hike in Indonesia" width="150"> |
 | RaviM | Ravi | Enjoy coding<br>Watching movies | [View Portfolio](RaviM/README.md) | N/A | No images |
@@ -52,4 +53,4 @@ This README is automatically generated and updated when changes are made to stud
 This README is automatically updated via GitHub Actions whenever any `README.md` file in the student-portfolios folder (or its subfolders) is modified.
 
 ---
-*Last updated: %Y->- (HEAD -> main, origin/main) 5e055655afac614081f1e1be9c789f55e3bf7a4e:%M:HEAD*
+*Last updated: %Y->- (HEAD -> main, origin/main) 6b90b9ccec9e26a865dc0f8b3e42709c66695387:%M:HEAD*
