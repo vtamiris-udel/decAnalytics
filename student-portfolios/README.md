@@ -14,6 +14,7 @@ This README is automatically generated and updated when changes are made to stud
 | LukeB | Luke | I have a 3yo Sheepadoodle named Benny.<br>I like playing badminton in my free time. | [View Portfolio](LukeB/README.md) | N/A | <img src="LukeB/PXL_20240522_154604796.PORTRAIT.ORIGINAL~3.jpg" alt="Benny in the flowers" title="Benny in the flowers" width="150"><img src="LukeB/IMG_0878.jpg" alt="Me playing badminton" title="Me playing badminton" width="150"> |
 | RaheelU | Raheel | Enjoy traveling and hiking<br>Philadelphia sports fan - Go Birds!! | [View Portfolio](RaheelU/README.md) | N/A | No images |
 | RaviM | Ravi | Enjoy coding<br>Watching movies | [View Portfolio](RaviM/README.md) | N/A | No images |
+| SidJena | Sid | My favorite band growing up was The Backstreet Boy...<br>I play a lot of sports. | [View Portfolio](SidJena/README.md) | N/A | <img src="SidJena/MyTeam.jpeg" alt="MySportTeam" title="MySportTeam" width="150"> |
 | VicT | Venkat | <br>Traveling with Family | [View Portfolio](VicT/README.md) | N/A | <img src="VicT/Venkat.jpg" alt="Venkat with Family" title="Venkat with Family" width="150"> |
 | ashandilya48 | Anupam | I am a very bad karaoke singer<br>I am foolishly optimistic person | [View Portfolio](ashandilya48/README.md) | N/A | <img src="ashandilya48/IMG_0172.jpg" alt="Description" title="Description" width="150"> |
 
@@ -51,4 +52,4 @@ This README is automatically generated and updated when changes are made to stud
 This README is automatically updated via GitHub Actions whenever any `README.md` file in the student-portfolios folder (or its subfolders) is modified.
 
 ---
-*Last updated: %Y->- (HEAD -> main, origin/main) 0c2b2d574248749af962264d6372176414955152:%M:HEAD*
+*Last updated: %Y->- (HEAD -> main, origin/main) 6d4dbf8e4a3a2653cceccdef6ff8d672a194d1fc:%M:HEAD*
