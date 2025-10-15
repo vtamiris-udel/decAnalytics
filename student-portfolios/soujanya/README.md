@@ -16,5 +16,5 @@
 
 
 ### Personal Photo
-![soujanya- With family on wedding](C:\Users\souja\OneDrive\Pictures\IMG_2293.jpeg)
+![soujanya- With family on wedding](C:\decAnalytics\IMG_2293.jpeg)
 
