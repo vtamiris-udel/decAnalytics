@@ -1,4 +1,4 @@
-# 👨‍🎓 Student Portfolio - Adam F. 🚴
+# 👨‍🎓 Student Portfolio - Chris Martinez 🚴
 
 ---
 
@@ -6,18 +6,16 @@
 
 | **Field** | **Details** |
 |-----------|-------------|
-| **Nickname/Pseudonym** | Adam |
-| **Interesting Fact** | Inventor of "The Invisible Pool Toy" - I hold a patent for it. |
-| **Interesting Fact2** | I like biking in cities and on gravel rail trails.🚴 |
+| **Nickname/Pseudonym** | Chris |
+| **Interesting Fact** | I am expecting twin girls (fraternal) this December!|
+| **Interesting Fact2** | I am an avid baseball fan (Go Yankees!). I also played two years in college.|
 
 ---
 
 ## 🖼️ Portfolio Images
 
-### My Invention: The Invisible Pool Toy
-![The Invisible Pool Toy](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpU-_uS7d7czuDb5wBpTui3ahBAFzJAIMpJA&s)
+### 2024 ALDS Game 2
+![2024 ALDS Game 2 at Yankee Stadium](image2.jpeg)
 
 ### Personal Photo
-![Adam - With family on the Rehoboth-Lewes Beach Bike Trail](IMG_1783.png)
-
-
+![Our Babyshower](image1.jpeg)
