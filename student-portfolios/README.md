@@ -17,6 +17,7 @@ This README is automatically generated and updated when changes are made to stud
 | MukeshM | N/A | N/A<br>N/A | [View Portfolio](MukeshM/README.md) | N/A | No images |
 | RaheelU | Raheel | Enjoy traveling and hiking<br>Philadelphia sports fan - Go Birds!! | [View Portfolio](RaheelU/README.md) | N/A | <img src="RaheelU/Indonesia_waterfall.jpg" alt="Waterfall hike in Indonesia" title="Waterfall hike in Indonesia" width="150"> |
 | RaviM | Ravi | Enjoy coding<br>Watching movies | [View Portfolio](RaviM/README.md) | N/A | No images |
+| RohitT | RohitT | I value time with family, especially my daughter<br>I believe small improvements every day make a big ... | [View Portfolio](RohitT/README.md) | N/A | <img src="RohitT/./holiday_photo.jpg" alt="Holiday Photo" title="Holiday Photo" width="150"> |
 | SidJena | Sid | My favorite band growing up was The Backstreet Boy...<br>I play a lot of sports. | [View Portfolio](SidJena/README.md) | N/A | <img src="SidJena/MyTeam.jpeg" alt="MySportTeam" title="MySportTeam" width="150"> |
 | Sobina | Sobina | You'll always find me singing when I'm driving lik...<br>I've recently got obsessed with 5Ks. | [View Portfolio](Sobina/README.md) | N/A | <img src="Sobina/sobina.jpg" alt="Sobina" title="Sobina" width="150"> |
 | VicT | Venkat | <br>Traveling with Family | [View Portfolio](VicT/README.md) | N/A | <img src="VicT/Venkat.jpg" alt="Venkat with Family" title="Venkat with Family" width="150"> |
@@ -58,4 +59,4 @@ This README is automatically generated and updated when changes are made to stud
 This README is automatically updated via GitHub Actions whenever any `README.md` file in the student-portfolios folder (or its subfolders) is modified.
 
 ---
-*Last updated: %Y->- (HEAD -> main, origin/main) da1cd7e23c933eb8b60cdb23a607de247560a6fd:%M:HEAD*
+*Last updated: %Y->- (HEAD -> main, origin/main) 0b6455a54bfbf11684c79814a4fccb0bd18a3d24:%M:HEAD*
