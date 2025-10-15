@@ -15,6 +15,7 @@ This README is automatically generated and updated when changes are made to stud
 | RaheelU | Raheel | Enjoy traveling and hiking<br>Philadelphia sports fan - Go Birds!! | [View Portfolio](RaheelU/README.md) | N/A | <img src="RaheelU/Indonesia_waterfall.jpg" alt="Waterfall hike in Indonesia" title="Waterfall hike in Indonesia" width="150"> |
 | RaviM | Ravi | Enjoy coding<br>Watching movies | [View Portfolio](RaviM/README.md) | N/A | No images |
 | SidJena | Sid | My favorite band growing up was The Backstreet Boy...<br>I play a lot of sports. | [View Portfolio](SidJena/README.md) | N/A | <img src="SidJena/MyTeam.jpeg" alt="MySportTeam" title="MySportTeam" width="150"> |
+| Sobina | Sobina | You'll always find me singing when I'm driving lik...<br>I've recently got obsessed with 5Ks. | [View Portfolio](Sobina/README.md) | N/A | <img src="Sobina/sobina.jpg" alt="Sobina" title="Sobina" width="150"> |
 | VicT | Venkat | <br>Traveling with Family | [View Portfolio](VicT/README.md) | N/A | <img src="VicT/Venkat.jpg" alt="Venkat with Family" title="Venkat with Family" width="150"> |
 | VikramG | Vikram | I love running and at one point was doing half mar...<br>I like travelling and just relaxing doing nothing! | [View Portfolio](VikramG/README.md) | N/A | <img src="VikramG/IMG_2286.JPEG" alt="Me and my coworker playing tennis" title="Me and my coworker playing tennis" width="150"><img src="VikramG/vikram_family.JPEG" alt="Vikram - With family Going to I think Florida" title="Vikram - With family Going to I think Florida" width="150"> |
 | ashandilya48 | Anupam | I am a very bad karaoke singer<br>I am foolishly optimistic person | [View Portfolio](ashandilya48/README.md) | N/A | <img src="ashandilya48/IMG_0172.jpg" alt="Description" title="Description" width="150"> |
@@ -54,4 +55,4 @@ This README is automatically generated and updated when changes are made to stud
 This README is automatically updated via GitHub Actions whenever any `README.md` file in the student-portfolios folder (or its subfolders) is modified.
 
 ---
-*Last updated: %Y->- (HEAD -> main, origin/main) 000fe536536f8629d810fb9c0831276872656134:%M:HEAD*
+*Last updated: %Y->- (HEAD -> main, origin/main) ea79373e32058c272b6bd5cfb10018e7b16d9347:%M:HEAD*
