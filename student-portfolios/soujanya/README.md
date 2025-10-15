@@ -1,4 +1,4 @@
-# 👨‍🎓 Student Portfolio - Adam F. 🚴
+# 👨‍🎓 Student Portfolio -soujanya
 
 ---
 
@@ -16,5 +16,5 @@
 
 
 ### Personal Photo
-![soujanya- With family on wedding](C:\decAnalytics\IMG_2293.jpeg)
+![soujanya- With family on wedding](IMG_2293.jpeg)
 
