@@ -12,6 +12,7 @@ This README is automatically generated and updated when changes are made to stud
 | AshwiniP | Ashwini | I am a big Harry Potter fan!<br>I like to ride bike and hiking🚴 | [View Portfolio](AshwiniP/README.md) | N/A | <img src="AshwiniP/IMG_0357.png" alt="Ashwini in Ediburgh , Scotland posing in front of the cafe where J K Rowling got her inspiration for Harry Potter" title="Ashwini in Ediburgh , Scotland posing in front of the cafe where J K Rowling got her inspiration for Harry Potter" width="150"> |
 | LukeB | Luke | I have a 3yo Sheepadoodle named Benny.<br>I like playing badminton in my free time. | [View Portfolio](LukeB/README.md) | N/A | <img src="LukeB/PXL_20240522_154604796.PORTRAIT.ORIGINAL~3.jpg" alt="Benny in the flowers" title="Benny in the flowers" width="150"><img src="LukeB/IMG_0878.jpg" alt="Me playing badminton" title="Me playing badminton" width="150"> |
 | RaheelU | Raheel | Enjoy traveling and hiking<br>Philadelphia sports fan - Go Birds!! | [View Portfolio](RaheelU/README.md) | N/A | No images |
+| RaviM | Ravi | Enjoy coding<br>Watching movies | [View Portfolio](RaviM/README.md) | N/A | No images |
 | VicT | Venkat | <br>Traveling with Family | [View Portfolio](VicT/README.md) | N/A | <img src="VicT/Venkat.jpg" alt="Venkat with Family" title="Venkat with Family" width="150"> |
 | ashandilya48 | Anupam | I am a very bad karaoke singer<br>I am foolishly optimistic person | [View Portfolio](ashandilya48/README.md) | N/A | <img src="ashandilya48/IMG_0172.jpg" alt="Description" title="Description" width="150"> |
 
@@ -49,4 +50,4 @@ This README is automatically generated and updated when changes are made to stud
 This README is automatically updated via GitHub Actions whenever any `README.md` file in the student-portfolios folder (or its subfolders) is modified.
 
 ---
-*Last updated: %Y->- (HEAD -> main, origin/main) a08d5dec51f695b1c129b9d4b222166aede8cbf0:%M:HEAD*
+*Last updated: %Y->- 0ea69926b13ae97c8ab1d731aaa1ca35e9e5c0c1:%M:HEAD*
