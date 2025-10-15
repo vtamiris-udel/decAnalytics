@@ -14,7 +14,7 @@
 
 ## 🖼️ Portfolio Images
 
-### My Invention: The Invisible Pool Toy
+### Awards
 ![Memo](Photo1.jpeg)
 
 ### Personal Photo
