@@ -12,7 +12,7 @@ This README is automatically generated and updated when changes are made to stud
 | AshwiniP | Ashwini | I am a big Harry Potter fan!<br>I like to ride bike and hiking🚴 | [View Portfolio](AshwiniP/README.md) | N/A | <img src="AshwiniP/IMG_0357.png" alt="Ashwini in Ediburgh , Scotland posing in front of the cafe where J K Rowling got her inspiration for Harry Potter" title="Ashwini in Ediburgh , Scotland posing in front of the cafe where J K Rowling got her inspiration for Harry Potter" width="150"> |
 | Ayesha | Ayesha | Interested in listening to music during long drive...<br>N/A | [View Portfolio](Ayesha/README.md) | N/A | <img src="Ayesha/IMG_5653.jpg" alt="Ayesha  - With family" title="Ayesha  - With family" width="150"> |
 | LukeB | Luke | I have a 3yo Sheepadoodle named Benny.<br>I like playing badminton in my free time. | [View Portfolio](LukeB/README.md) | N/A | <img src="LukeB/PXL_20240522_154604796.PORTRAIT.ORIGINAL~3.jpg" alt="Benny in the flowers" title="Benny in the flowers" width="150"><img src="LukeB/IMG_0878.jpg" alt="Me playing badminton" title="Me playing badminton" width="150"> |
-| RaheelU | Raheel | Enjoy traveling and hiking<br>Philadelphia sports fan - Go Birds!! | [View Portfolio](RaheelU/README.md) | N/A | No images |
+| RaheelU | Raheel | Enjoy traveling and hiking<br>Philadelphia sports fan - Go Birds!! | [View Portfolio](RaheelU/README.md) | N/A | <img src="RaheelU/Indonesia_waterfall.jpg" alt="Waterfall hike in Indonesia" title="Waterfall hike in Indonesia" width="150"> |
 | RaviM | Ravi | Enjoy coding<br>Watching movies | [View Portfolio](RaviM/README.md) | N/A | No images |
 | SidJena | Sid | My favorite band growing up was The Backstreet Boy...<br>I play a lot of sports. | [View Portfolio](SidJena/README.md) | N/A | <img src="SidJena/MyTeam.jpeg" alt="MySportTeam" title="MySportTeam" width="150"> |
 | VicT | Venkat | <br>Traveling with Family | [View Portfolio](VicT/README.md) | N/A | <img src="VicT/Venkat.jpg" alt="Venkat with Family" title="Venkat with Family" width="150"> |
@@ -52,4 +52,4 @@ This README is automatically generated and updated when changes are made to stud
 This README is automatically updated via GitHub Actions whenever any `README.md` file in the student-portfolios folder (or its subfolders) is modified.
 
 ---
-*Last updated: %Y->- c8f42b1c73f7610fc4354746936eab4b51239909:%M:HEAD*
+*Last updated: %Y->- (HEAD -> main, origin/main) 5e055655afac614081f1e1be9c789f55e3bf7a4e:%M:HEAD*
