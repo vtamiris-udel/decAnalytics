@@ -6,7 +6,7 @@
 
 | **Field** | **Details** |
 |-----------|-------------|
-| **Nickname/Pseudonym** | Rohit |
+| **Nickname/Pseudonym** | Rohit M|
 | **Interesting Fact** | sports entusiast, teetotaler and intovert |
 | **Interesting Fact2** | One of the best cricket player in DE |
 
@@ -15,7 +15,7 @@
 ## 🖼️ Portfolio Images
 
 ### My Invention: The Invisible Pool Toy
-![Memo](Photo1.jpeg))
+![Memo](Photo1.jpeg)
 
 ### Personal Photo
 ![Beautiful family](Photo2.jpeg)
