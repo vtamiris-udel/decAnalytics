@@ -17,6 +17,7 @@ This README is automatically generated and updated when changes are made to stud
 | SidJena | Sid | My favorite band growing up was The Backstreet Boy...<br>I play a lot of sports. | [View Portfolio](SidJena/README.md) | N/A | <img src="SidJena/MyTeam.jpeg" alt="MySportTeam" title="MySportTeam" width="150"> |
 | VicT | Venkat | <br>Traveling with Family | [View Portfolio](VicT/README.md) | N/A | <img src="VicT/Venkat.jpg" alt="Venkat with Family" title="Venkat with Family" width="150"> |
 | ashandilya48 | Anupam | I am a very bad karaoke singer<br>I am foolishly optimistic person | [View Portfolio](ashandilya48/README.md) | N/A | <img src="ashandilya48/IMG_0172.jpg" alt="Description" title="Description" width="150"> |
+| mrbabu | Rohit M | sports entusiast, teetotaler and intovert<br>One of the best cricket player in DE | [View Portfolio](mrbabu/README.md) | N/A | <img src="mrbabu/Photo1.jpeg" alt="Memo" title="Memo" width="150"><img src="mrbabu/Photo2.jpeg" alt="Beautiful family" title="Beautiful family" width="150"> |
 
 ## 🆕 How to Add Your Portfolio
 
@@ -52,4 +53,4 @@ This README is automatically generated and updated when changes are made to stud
 This README is automatically updated via GitHub Actions whenever any `README.md` file in the student-portfolios folder (or its subfolders) is modified.
 
 ---
-*Last updated: %Y->- (HEAD -> main, origin/main) 5e055655afac614081f1e1be9c789f55e3bf7a4e:%M:HEAD*
+*Last updated: %Y->- (HEAD -> main, origin/main) c027d0c04c8ce4a3164ea6bb722db02c34878608:%M:HEAD*
