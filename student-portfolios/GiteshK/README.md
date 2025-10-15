@@ -15,6 +15,6 @@
 ## 🖼️ Portfolio Images
 
 ### Personal Photo
-![Gitesh - With family on vacation, Pune India](Family.jpg)
+![Gitesh - With family on vacation, Pune India](Family.jpeg)
 
 
