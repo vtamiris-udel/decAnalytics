@@ -8,7 +8,7 @@
 |-----------|-------------|
 | **Nickname/Pseudonym** | Vikram |
 | **Interesting Fact** | I love running and at one point was doing half marathon evey saturday till I start having pain in my knee. |
-| **Interesting Fact2** | I like travelling and just relaxing doing nothing. |
+| **Interesting Fact2** | I like travelling and just relaxing doing nothing.  |
 
 ---
 
